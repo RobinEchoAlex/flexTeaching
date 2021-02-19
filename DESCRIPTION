@@ -29,5 +29,7 @@ Imports:
     shinybusy,
     purrr,
     dplyr,
-    settings
+    settings,
+    crayon,
+    pillar
 RoxygenNote: 7.1.1
