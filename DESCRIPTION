@@ -10,26 +10,16 @@ License: MIT
 Encoding: UTF-8
 StagedInstall: no
 Imports: 
-    noah (== 0.1.0),
     shiny,
     shinyjs,
-    htmltools,
     rclipboard,
     knitr,
     R.utils,
     glue,
     yaml,
-    rmarkdown,
     flexdashboard,
-    digest,
-    haven,
-    readr,
-    writexl,
-    magrittr,
-    shinybusy,
     purrr,
     dplyr,
-    settings,
     crayon,
     pillar
 RoxygenNote: 7.1.1
