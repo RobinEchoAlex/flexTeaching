@@ -21,5 +21,6 @@ Imports:
     purrr,
     dplyr,
     crayon,
-    pillar
+    pillar,
+    settings
 RoxygenNote: 7.1.1
