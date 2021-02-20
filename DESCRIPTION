@@ -11,6 +11,8 @@ Encoding: UTF-8
 StagedInstall: no
 Imports: 
     dplyr
+    pillar
+    crayon
 Suggests:
     flexdashboard
 RoxygenNote: 7.1.1
