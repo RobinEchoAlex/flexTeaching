@@ -10,17 +10,6 @@ License: MIT
 Encoding: UTF-8
 StagedInstall: no
 Imports: 
-    shiny,
-    shinyjs,
-    rclipboard,
-    knitr,
-    R.utils,
-    glue,
-    yaml,
     flexdashboard,
-    purrr,
-    dplyr,
-    crayon,
-    pillar,
-    settings
+    dplyr
 RoxygenNote: 7.1.1
