@@ -1,6 +1,3 @@
-
-
-
 #' Source all the files indicated in the assignment data
 #'
 #' @param assignment_data data for the particular assignment

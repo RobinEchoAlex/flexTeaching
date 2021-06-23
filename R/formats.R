@@ -1,5 +1,3 @@
-
-
 formats = list(
   SPSS = list(
     title = "SPSS",

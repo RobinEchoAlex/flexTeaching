@@ -1,5 +1,3 @@
-
-
 #' Compile a data set and assignment document
 #'
 #' @param assignment_data data from _assignment.yml

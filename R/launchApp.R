@@ -1,5 +1,3 @@
-
-
 #' Run one of the shiny interfaces
 #'
 #' @param which Which app to open ('solve' or 'download')

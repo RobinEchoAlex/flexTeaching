@@ -1,4 +1,3 @@
-
 compile_assignment_html <- function(path, envir = new.env(), ...){
   tmpfn = tempfile(fileext = ".html")
   input = file.path(path, "index.Rmd")

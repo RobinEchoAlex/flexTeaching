@@ -1,4 +1,3 @@
-
 #' Use id, seed, and salt to create an integer seed
 #'
 #' @param id id number of the student

@@ -1,5 +1,3 @@
-
-
 ```{r setup, include=FALSE, context="setup"}
 library(flexdashboard)
 library(magrittr)

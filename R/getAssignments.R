@@ -1,4 +1,3 @@
-
 #' Get a list of assignments in a directory
 #'
 #' @param path Directory path

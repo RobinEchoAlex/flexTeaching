@@ -1,4 +1,3 @@
-
 #' Create random alphanumeric strings
 #'
 #' @param n number of strings
