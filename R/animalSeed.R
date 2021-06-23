@@ -1,4 +1,4 @@
-#' Create animal string
+#' Generate an hashed string that consists of an animal and an alphanum string
 #'
 #' @param seed 
 #'
@@ -8,11 +8,14 @@
 #' @return
 #'
 animalSeed <- function(seed, salt){
+  # Trim the seed and salt string
   seed = trimws(seed)
   salt = trimws(salt)
+  # Hashing the seed+salt
   hash = digest::digest(paste0(seed, salt))
-  animals = R.utils::withSeed({noah::pseudonymize("")},
-                              alp2int(hash))
+  # Generate the adj_animal_alphanum string using seed+salt as the seed
+  animals = R.utils::withSeed(expr = {noah::pseudonymize("")},
+                              seed = alp2int(hash))
   animals = gsub(pattern = " ",
                  replacement = "_",
                  x = tolower(animals)

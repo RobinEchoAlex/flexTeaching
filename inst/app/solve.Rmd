@@ -15,6 +15,7 @@ runtime: shiny_prerendered
 ```
 
 ```{r, context="render"}
+# Load a lib that provides copy-to-clipboard functionality
 library(rclipboard)
 shiny::includeScript(path = system.file("lib/clipboard.min.js", package = "rclipboard"))
 ```
@@ -33,6 +34,7 @@ Column
 ------------------------------------
 
 ```{r context="server"}
+#"entry" is either solve or download
 entry <- "solve"
 
 seed <- reactive({
@@ -48,7 +50,10 @@ solutions <- reactive({
 ```{r child="children/content.Rmd"}
 ```
 
+
+
 <script>
+//Clicking the "show_admin" button (un)folds the admin panel
 $(document).ready(function () {
   $("#admin_panel").hide();
   $("#show_admin").on("click", function() {

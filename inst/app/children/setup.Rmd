@@ -22,6 +22,7 @@ shinyjs::useShinyjs(html = TRUE)
 
 ```{r cache, eval = FALSE, context="server"}
 shinyOptions(
+  # Key-value cache stores with automatic pruning by age or max_size.
   cache = cachem::cache_disk(
     dir = "./my_app_cache",
     max_size = 512 * 1024^2,
