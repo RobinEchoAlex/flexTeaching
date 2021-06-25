@@ -1,44 +1,49 @@
 ```{r context="server"}
 
+#Function that checks whether the current time passes the assignment release time
 assignment_accessible = reactive({
-    
+
   req(input$assignment)
 
   assignment = input$assignment
   assignment_data = all_assignment_data[[assignment]]
-  
+
   assignment_data$restrict_before<Sys.time()
-  
+
 })
 
 ```
 
 ```{r context="server"}
+# function that returns all the data used in this assignment, generated randomly based on stu_id, seed() and seed of the assignment
 init_list = reactive({
-  
+
   req(input$assignment)
 
   assignment = input$assignment
   assignment_data = all_assignment_data[[assignment]]
-  
-  fmt = flexTeaching::pkg_options()$date_format_prnt
-  
+
+  fmt = flexTeaching::pkg_options()$date_format_prnt #"%A, %d %B %Y at %X %z"
+
+  #if assignmenet is not released yet, print info and raise error
   validate(
-    need(assignment_accessible(), 
+    need(assignment_accessible(),
          glue::glue("This assignment will not be available until {strftime(assignment_data$restrict_before, format = '%A, %d %B %Y at %X %z')}."))
   )
-  
+
   id = input$id
   seed = seed()
   solutions = solutions()
-  
+
   salt = assignment_data$`data-salt`
   seed0 = flexTeaching:::assignmentSeed(id, seed, salt)
-  
+
   e = new.env()
-  
+
+  # load all files of this assignment
   flexTeaching:::sourceAll(assignment_data, e)
-  
+
+  # init_func currently is the init() in utility.R
   init_func = get(assignment_data$init, envir = e)
   if(!is.null(init_func)){
       R.utils::withSeed({
@@ -48,44 +53,47 @@ init_list = reactive({
   }else{
     ret_list = list()
   }
-    
+
   return(ret_list)
-    
+
 }) %>% bindCache(input$assignment, input$id, seed(), solutions(), assignment_accessible())
 ```
 
 
 ```{r context="render"}
+# Render a reactive element called "buttonBox"
 uiOutput("buttonBox", style = "width: 100%; margin: auto;")
 ```
 
 ```{r context="server"}
 
+# Business logic of download buttons
 output$buttonBox <- renderUI({
-  
+
   req(input$assignment)
-  
+
   assignment = input$assignment
   assignment_data = all_assignment_data[[assignment]]
-  
+
   fmt = flexTeaching::pkg_options()$date_format_prnt
-  
+
   req(assignment_data$restrict_before<Sys.time())
-  
+
   solutions = solutions()
-  
+
   e = new.env()
   flexTeaching:::sourceAll(assignment_data, e)
-  
+
+  # eventually call buttons() in utility.R
   bn = assignment_data$buttons
 
   if(is.null(bn)) return()
-  
+
   if(!exists(bn, envir = e)) return()
   bs = get(bn, envir = e)
-  
+
   button_reactives = list()
-  
+
   bl = lapply(names(bs), function(b){
     button_reactives[[b]] = reactive({
       shinybusy::show_modal_spinner(text = "Creating file...")
@@ -100,7 +108,7 @@ output$buttonBox <- renderUI({
       shinybusy::remove_modal_spinner()
       return(fc)
     }) %>% bindCache(input$assignment, input$id, seed(), solutions(), input$format, b, assignment_accessible())
-    
+
     output[[glue::glue("button_{b}")]] <- downloadHandler(
       filename = function() {
         button_reactives[[b]]()$fn
@@ -112,11 +120,11 @@ output$buttonBox <- renderUI({
         close(con)
       }
     )
-    
+
     shiny::downloadButton(glue::glue("button_{b}"), label=bs[[b]]$label,
                           icon = icon(bs[[b]]$icon))
   })
-  
+
   do.call(tagList, bl)
 })
 ```
@@ -130,31 +138,33 @@ uiOutput("assignmentBox")
 ```
 
 ```{r context="server"}
+# Eventually call rmarkdown::render to generate HTML
 render_out <- reactive({
-  
+
   req(input$assignment)
   assignment = input$assignment
   assignment_data = all_assignment_data[[assignment]]
-  
+
   id = input$id
   seed = seed()
   solutions = solutions()
-  
+
   i = init_list()
-  
+
   e = new.env()
   flexTeaching:::sourceAll(assignment_data, e)
-  
+
   html = flexTeaching:::compilePage(assignment_data, id, seed, solutions, e, i)
-  
- return(html)
-  
+
+  return(html)
+
 }) %>%
   bindCache(input$assignment, input$id, seed(), solutions(), assignment_accessible())
 ```
 
 ```{r context="server"}
 output$assignmentBox <- renderUI({
+  # adds MathJax to the page and typeset the math expressions
   withMathJax(render_out())
 })
 ```
@@ -162,27 +172,28 @@ output$assignmentBox <- renderUI({
 
 ```{r context="server"}
 observeEvent(render_out(), {
-  
+
   req(input$assignment)
   assignment = input$assignment
   assignment_data = all_assignment_data[[assignment]]
-  
+
   req(!is.null(assignment_data[['on-load']]))
-  
-  js_content = gsub(pattern = "\"", replacement = "\\\"", x = assignment_data[['on-load']],
-                    fixed = TRUE)
-  
+
+  # replace all \ with \\\ in the 'on-load' content
+  js_content = gsub(pattern = "\"", replacement = "\\\"", x = assignment_data[['on-load']],fixed = TRUE)
+
+  # parse the js content in 'on-load' field
   e = new.env()
   e$.flexteach_info = init_list()
   js_expr = parse(text = glue::glue('glue::glue("{js_content}")'))
   js_parsed = tryCatch(eval(expr = js_expr, envir = e),
-    error = function(c) 
-      safeError(glue::glue("Problem parsing javascript code on load of assignment {input$assignment}: {c}"))
-    )
+                       error = function(c)
+                       safeError(glue::glue("Problem parsing javascript code on load of assignment {input$assignment}: {c}"))
+  )
 
-
+  # and run the js
   if(!is.null(js_parsed) & length(js_parsed)>0)
     shinyjs::runjs(js_parsed)
-  
+
 })
 ```
