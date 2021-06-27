@@ -48,7 +48,7 @@ abline(lm(y ~ x, data = .flexteach_info$data))
     N = n(),
     Mean = mean(x),
     SD = sd(x)
-    ) -> sum_stats 
+    ) -> sum_stats
 
 sum_stats %>%
   gt(rowname_col = "variable") %>%
@@ -61,7 +61,7 @@ sum_stats %>%
 4. Compute the correlation between the two variables ``r cn[1]`` and ``r cn[2]``.
 
 ```{r results = 'asis', eval = .flexteach_solutions}
-r = cor(.flexteach_info$data)[2] %>% 
+r = cor(.flexteach_info$data)[2] %>%
   round(3)
 glue::glue("> The correlation is {r}.") %>%
   cat()
@@ -93,7 +93,7 @@ s = summary(lm_obj)$sigma
 preds = glue::glue("Predictors: {paste( names(coef(lm_obj)), collapse=', ')}")
 
 data.frame(
-  Model = "1", 
+  Model = "1",
   R = sqrt(r2),
   r2 = r2,
   ar2 = ar2,
@@ -160,3 +160,26 @@ cat(
 ")
 ```
 
+```{r eval = TRUE, echo = FALSE}
+library(reactR)
+library(htmltools)
+
+browsable(tagList(
+        tags$div(id = "app"),
+        tags$script(
+                "
+                  ReactDOM.render(
+                    React.createElement(
+                      'p',
+                      null,
+                      'Powered by React'
+                    ),
+                    document.getElementById('app')
+                  )
+                "
+        ),
+        #add core-js first to work in RStudio Viewer
+        #html_dependency_corejs(),
+        html_dependency_react()
+))
+```

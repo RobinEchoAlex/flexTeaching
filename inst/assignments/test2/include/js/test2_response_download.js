@@ -23,5 +23,6 @@ function test2_response_download(id){
     .hide()
     .appendTo('body')[0]
     .click()
-    $('#test2-download-link').remove()
+
+  $('#test2-download-link').remove()
 }
