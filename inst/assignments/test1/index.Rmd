@@ -160,23 +160,17 @@ cat(
 ")
 ```
 
-```{r eval = TRUE, echo = TRUE}
+```{r eval = TRUE, echo = FALSE}
 library(reactR)
 library(htmltools)
 
-reactScriptString = "  ReactDOM.render(
-                    React.createElement(
-                      'p',
-                      null,
-                      'Powered by React'
-                    ),
-                    document.getElementById('app')
-                  )"
+reactScriptString = 'ReactDOM.render(<h1>Powered By React/JSX</h1>,document.getElementById("app"))
+                  '
 
 browsable(tagList(
         tags$div(id = "app"),
         tags$script(
-            reactScriptString
+            babel_transform(reactScriptString)
         ),
         #add core-js first to work in RStudio Viewer
         #html_dependency_corejs(),
