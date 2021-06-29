@@ -36,16 +36,7 @@ library(htmltools)
 browsable(tagList(
   tags$div(id = "app"),
   tags$script(
-    "
-      ReactDOM.render(
-        React.createElement(
-          'p',
-          {id:'input_2'},
-          'Powered by React'
-        ),
-        document.getElementById('app')
-      )
-    "
+    babel_transform('ReactDOM.render(<input id="input_q2"/>,document.getElementById("app"))')
   ),
   #add core-js first to work in RStudio Viewer
   html_dependency_corejs(),
