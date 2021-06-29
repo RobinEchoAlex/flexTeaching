@@ -5,7 +5,7 @@ function test2_response_download(id){
   
   var h = $('<html></html>')
   var b = $('<body></body>')
-  
+
   b.appendTo(h)
    .append('<h2>ASSIGNMENT RESPONSES<h2>')
    .append(`<div id='idnum'>ID: ${id}</div>`)
@@ -15,7 +15,8 @@ function test2_response_download(id){
    
   b.find('#q3')
     .append(images)
-   
+
+  // Add a download link and 'click' it to achieve download function
   $('<a></a>')
     .attr('id', 'test2-download-link')
     .attr('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(h[0].outerHTML))
@@ -24,5 +25,6 @@ function test2_response_download(id){
     .appendTo('body')[0]
     .click()
 
+  //The previous download link should be invisible
   $('#test2-download-link').remove()
 }
