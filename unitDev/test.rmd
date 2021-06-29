@@ -53,17 +53,28 @@ browsable(tagList(
 ))
 ```
 
+
+```{r}
+loadScript = function (){
+  library(readr)
+  wd = getwd()
+  # setwd(getSrcDirectory()[1])
+  # https://stackoverflow.com/questions/13672720/r-command-for-setting-working-directory-to-source-file-location-in-rstudio
+  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+  wd = getwd()
+  fileName = 'reactCode.js'
+  mystring <- read_file(fileName)
+  return(mystring)
+}
+```
+
+
 ```{r echo=TRUE}
 
 library(reactR)
 library(htmltools)
 
-script = '
-function a(){
-  console.log("clicked")
-}
-
-ReactDOM.render(<button onClick={a}>Powered By React/JSX</button>,document.getElementById("app2"))'
+script = loadScript()
 
 browsable(tagList(
         tags$div(id = "app2"),
@@ -76,3 +87,6 @@ browsable(tagList(
         html_dependency_react()
 ))
 ```
+
+
+
