@@ -1,10 +1,19 @@
-function a() {
-    console.log("clicked")
+function responseDownload() {
+    console.log("Download response")
+    document.querySelectorAll('[id^="input_"]').forEach(function (node){
+            console.log(node.id);
+        }
+    );
 }
 
 ReactDOM.render(
-    <button onClick={a}>
-        Powered By React/JSX
-    </button>,
+    <div>
+        <input id='input_q1'/>
+        <br/>
+        <button onClick={responseDownload}>
+            Download your response
+        </button>
+    </div>
+    ,
     document.getElementById("app2")
 )

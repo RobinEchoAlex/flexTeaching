@@ -40,7 +40,7 @@ browsable(tagList(
       ReactDOM.render(
         React.createElement(
           'p',
-          null,
+          {id:'input_2'},
           'Powered by React'
         ),
         document.getElementById('app')
@@ -60,7 +60,7 @@ loadScript = function (){
   wd = getwd()
   # setwd(getSrcDirectory()[1])
   # https://stackoverflow.com/questions/13672720/r-command-for-setting-working-directory-to-source-file-location-in-rstudio
-  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+  #setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
   wd = getwd()
   fileName = 'reactCode.js'
   mystring <- read_file(fileName)
