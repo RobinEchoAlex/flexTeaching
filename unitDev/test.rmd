@@ -1,0 +1,78 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+        echo = FALSE
+        , dev = "svg"
+        , dpi = 150
+        , fig.width = 5
+        , fig.height = 5
+        , dev.args = list(pointsize=13)
+        , out.width = "40%"
+)
+library(broom)
+library(gt)
+library(dplyr)
+library(tidyr)
+library(reactR)
+library(htmltools)
+```
+
+```{r}
+library(reactR)
+reactR::component("ParentComponent",
+                  list(
+                          x = 1,
+                          y = 2,
+                          component("ChildComponent"),
+                          component("OtherChildComponent")
+                  )
+)
+```
+
+```{r echo=TRUE}
+
+library(reactR)
+library(htmltools)
+
+browsable(tagList(
+  tags$div(id = "app"),
+  tags$script(
+    "
+      ReactDOM.render(
+        React.createElement(
+          'p',
+          null,
+          'Powered by React'
+        ),
+        document.getElementById('app')
+      )
+    "
+  ),
+  #add core-js first to work in RStudio Viewer
+  html_dependency_corejs(),
+  html_dependency_react()
+))
+```
+
+```{r echo=TRUE}
+
+library(reactR)
+library(htmltools)
+
+script = '
+function a(){
+  console.log("clicked")
+}
+
+ReactDOM.render(<button onClick={a}>Powered By React/JSX</button>,document.getElementById("app2"))'
+
+browsable(tagList(
+        tags$div(id = "app2"),
+        tags$script(
+                 babel_transform(script)
+
+        ),
+        #add core-js first to work in RStudio Viewer
+        html_dependency_corejs(),
+        html_dependency_react()
+))
+```
