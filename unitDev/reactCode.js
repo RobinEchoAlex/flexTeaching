@@ -7,7 +7,7 @@ function responseDownload() {
     document.querySelectorAll('[id^="input_"]').forEach(function (node){
             console.log(node.id);
             console.log(node.value);
-            var s = "<div id=" + node.id + ">" + node.value + "</div>"
+            var s = "<div id=\"" + node.id + "\">" + node.value + "</div>"
             blobParts.push(s)
         }
     );
