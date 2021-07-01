@@ -182,10 +182,11 @@ observeEvent(render_out(), {
   # replace all \ with \\\ in the 'on-load' content
   js_content = gsub(pattern = "\"", replacement = "\\\"", x = assignment_data[['on-load']],fixed = TRUE)
 
-  # parse the js content in 'on-load' field
+  # substitude the id placeholder in the js script with real id
   e = new.env()
   e$.flexteach_info = init_list()
   js_expr = parse(text = glue::glue('glue::glue("{js_content}")'))
+  # parse the js content in 'on-load' field
   js_parsed = tryCatch(eval(expr = js_expr, envir = e),
                        error = function(c)
                        safeError(glue::glue("Problem parsing javascript code on load of assignment {input$assignment}: {c}"))
