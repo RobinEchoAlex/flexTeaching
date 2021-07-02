@@ -8,21 +8,22 @@ if(!exists(".flexteach_solutions"))
 ```{r}
 loadScript = function (codeFileName = "reactCode.js"){
   library(readr)
-  wd = getwd()
+  #wd = getwd()
   # setwd(getSrcDirectory()[1])
   # https://stackoverflow.com/questions/13672720/r-command-for-setting-working-directory-to-source-file-location-in-rstudio
   # setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-  wd = getwd()
+  #wd = getwd()
   fileName = paste0('include/js/',codeFileName);
-  mystring <- read_file(fileName)
+  jsScriptString <- read_file(fileName)
   # replacing the id placeholder in the js code with real id at runtime
   if (is.null(input$id) || input$id==""){
     id = -1;
   }else{
     id = input$id;
   }
-  mystring = sub('\\{id\\}',paste0("\"",id,"\""),mystring)
-  return(mystring)
+  idString = paste0("\"", id, "\"")
+  jsScriptString = sub('\\{id\\}',idString , jsScriptString)
+  return(jsScriptString)
 }
 
 ```
