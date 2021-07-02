@@ -1,15 +1,15 @@
 function responseDownload() {
 
-    console.log("Download response")
-    var id = {id};
-    console.log(id);
-
+    //a new doc containing all responses and to be downloaded
     var doc = document.implementation.createHTMLDocument("Assignment Response");
+    //stu_id, {id} will be replaced by real id int at runtime, see loadScript()
+    var id = {id};
     var idDiv = doc.createElement('div')
     idDiv.id = "id"
     idDiv.textContent = id
     doc.body.appendChild(idDiv)
 
+    //fetch the value of all input fields (whose id starts with "input") //TODO easy violation
     document.querySelectorAll('[id^="input_"]').forEach(function (node){
             console.log(node.id);
             console.log(node.value);
@@ -32,10 +32,13 @@ function responseDownload() {
         doc.body.innerHTML +
         '</body>';
     */
+
+    //Assemble the blob that contains the HTML
     var blob = new Blob([doc.body.innerHTML]);
     var url = window.URL.createObjectURL(blob);
     var filename = 'response.html';
 
+    // Trigger auto download
     var aDownload = document.createElement('a');
     aDownload.href = url;
     aDownload.download = filename;
