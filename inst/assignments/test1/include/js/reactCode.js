@@ -4,7 +4,7 @@ function responseDownload() {
     var id = {id};
     console.log(id);
 
-    var doc = document.implementation.createHTMLDocument("New Document");
+    var doc = document.implementation.createHTMLDocument("Assignment Response");
     var idDiv = doc.createElement('div')
     idDiv.id = "id"
     idDiv.textContent = id
@@ -21,6 +21,17 @@ function responseDownload() {
         }
     );
 
+    // Adding the head and body tag enables title (the argu in the creHTMLdoc()) display
+    // But now the downloaded file is encoded as "&lt;head&gt;", which prevents rendering properly
+    // Not resolved yet
+    /*
+    var serialized =
+        '<head>' +
+        doc.getElementsByTagName('head')[0].innerHTML +
+        '</head><body>' +
+        doc.body.innerHTML +
+        '</body>';
+    */
     var blob = new Blob([doc.body.innerHTML]);
     var url = window.URL.createObjectURL(blob);
     var filename = 'response.html';
