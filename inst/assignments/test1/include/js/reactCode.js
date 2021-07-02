@@ -21,11 +21,11 @@ function responseDownload() {
         }
     );
 
-    console.log(doc.body.innerHTML)
     var blob = new Blob([doc.body.innerHTML]);
-    var aDownload = document.createElement('a');
     var url = window.URL.createObjectURL(blob);
     var filename = 'response.html';
+
+    var aDownload = document.createElement('a');
     aDownload.href = url;
     aDownload.download = filename;
     aDownload.click();
