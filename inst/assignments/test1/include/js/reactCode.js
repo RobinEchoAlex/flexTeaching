@@ -1,10 +1,10 @@
 function responseDownload() {
 
     //a new doc containing all responses and to be downloaded
-    var doc = document.implementation.createHTMLDocument("Assignment Response");
+    let doc = document.implementation.createHTMLDocument("Assignment Response");
     //stu_id, {id} will be replaced by real id int at runtime, see loadScript()
-    var id = {id};
-    var idDiv = doc.createElement('div')
+    let id = {id};
+    let idDiv = doc.createElement('div')
     idDiv.id = "id"
     idDiv.textContent = id
     doc.body.appendChild(idDiv)
@@ -14,7 +14,7 @@ function responseDownload() {
             console.log(node.id);
             console.log(node.value);
 
-            var div = doc.createElement('div')
+            let div = doc.createElement('div')
             div.id=node.id
             div.textContent= node.id + ":" + node.value
             doc.body.appendChild(div);
@@ -34,12 +34,12 @@ function responseDownload() {
     */
 
     //Assemble the blob that contains the HTML
-    var blob = new Blob([doc.body.innerHTML]);
-    var url = window.URL.createObjectURL(blob);
-    var filename = 'response.html';
+    let blob = new Blob([doc.body.innerHTML]);
+    let url = window.URL.createObjectURL(blob);
+    let filename = 'response.html';
 
     // Trigger auto download
-    var aDownload = document.createElement('a');
+    let aDownload = document.createElement('a');
     aDownload.href = url;
     aDownload.download = filename;
     aDownload.click();
