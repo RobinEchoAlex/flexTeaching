@@ -5,10 +5,6 @@ function responseDownload() {
     console.log(id);
 
     var doc = document.implementation.createHTMLDocument("New Document");
-
-    var blobParts = [];
-    blobParts.push(id);
-
     var idDiv = doc.createElement('div')
     idDiv.id = "id"
     idDiv.textContent = id
@@ -17,8 +13,6 @@ function responseDownload() {
     document.querySelectorAll('[id^="input_"]').forEach(function (node){
             console.log(node.id);
             console.log(node.value);
-            var s = "<div id=\"" + node.id + "\">" + node.value + "</div>"
-            blobParts.push(s)
 
             var div = doc.createElement('div')
             div.id=node.id
