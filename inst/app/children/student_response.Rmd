@@ -10,13 +10,13 @@ uiOutput("responseBox")
 
 ```{r context="server"}
 output$responseBox <- renderUI({
-  file = input$responses
-  req(file)
-  ext = tools::file_ext(file$datapath)
-  cat(ext)
+  fileDf = input$responses
+  req(fileDf)
 
-  htmlString = readr::read_file(file$datapath)
-  cat(htmlString,"\n")
+  print(fileDf$datapath)
+
+  htmlString = readr::read_file(fileDf$datapath[[1]])
+
   return(HTML(htmlString))
 })
 ```
