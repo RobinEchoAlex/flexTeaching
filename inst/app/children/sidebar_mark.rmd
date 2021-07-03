@@ -1,5 +1,10 @@
 ```{r context="render"}
-actionButton("responses_upload","Upload Response")
+tags$hr()
+fileInput(inputId = "responses",
+          label = "Upload responses",
+          multiple = TRUE,
+          accept = c(".html",".htm"))
+
 actionButton("responses_download","Download Feedback")
 #TODO an forward and backward button, replaced by a scroll list in the future.
 ```
