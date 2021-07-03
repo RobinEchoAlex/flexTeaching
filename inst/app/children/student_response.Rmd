@@ -1,12 +1,9 @@
-
-
 ### Response
 
 ```{r context="render"}
 uiOutput("responseBox")
+
 ```
-
-
 
 ```{r context="server"}
 output$responseBox <- renderUI({
@@ -17,7 +14,12 @@ output$responseBox <- renderUI({
 
   htmlString = readr::read_file(fileDf$datapath[[1]])
 
+  session$sendCustomMessage("add_marking_component", "message");
+  shinyjs::extendShinyjs(text = ' shinyjs.cc =  function(params){ alert(params.alert); }', functions = c("cc"));
+  #shinyjs::runjs("alert(params.alert)")
+  shinyjs::js$cc(alert = "fds")
+
   return(HTML(htmlString))
+
 })
 ```
-
