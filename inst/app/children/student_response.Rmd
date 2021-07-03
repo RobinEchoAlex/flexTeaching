@@ -11,9 +11,7 @@ uiOutput("responseBox")
 ```{r context="server"}
 output$responseBox <- renderUI({
   # adds MathJax to the page and typeset the math expressions
-  tagList(tags$h1("Test 1"),
-          tags$h2("Test 2"),
-          tags$p("Test 3"))
+  HTML('<head><title>New Document</title></head><body><div id="id">456321</div><div id="input_q1">input_q1:153</div><div id="input_q1">input_q1:87</div></body>')
 })
 ```
 
