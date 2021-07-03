@@ -21,18 +21,6 @@ function responseDownload() {
         }
     );
 
-    // Adding the head and body tag enables title (the argu in the creHTMLdoc()) display
-    // But now the downloaded file is encoded as "&lt;head&gt;", which prevents rendering properly
-    // Not resolved yet
-    /*
-    var serialized =
-        '<head>' +
-        doc.getElementsByTagName('head')[0].innerHTML +
-        '</head><body>' +
-        doc.body.innerHTML +
-        '</body>';
-    */
-
     //Assemble the blob that contains the HTML
     let blob = new Blob([doc.body.innerHTML]);
     let url = window.URL.createObjectURL(blob);
