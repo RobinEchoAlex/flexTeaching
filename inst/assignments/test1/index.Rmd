@@ -80,22 +80,6 @@ sum_stats %>%
   fmt_number(c("Mean","SD"), decimals = 3)
 ```
 
-```{r echo=TRUE}
-
-library(reactR)
-library(htmltools)
-
-browsable(tagList(
-  tags$div(id = "app"),
-  tags$script(
-    babel_transform('ReactDOM.render(<input id="input_q1"/>,document.getElementById("app"))')
-  ),
-  #add core-js first to work in RStudio Viewer
-  html_dependency_corejs(),
-  html_dependency_react()
-))
-```
-
 4. Compute the correlation between the two variables ``r cn[1]`` and ``r cn[2]``.
 
 ```{r results = 'asis', eval = .flexteach_solutions}
@@ -103,44 +87,6 @@ r = cor(.flexteach_info$data)[2] %>%
   round(3)
 glue::glue("> The correlation is {r}.") %>%
   cat()
-```
-
-```{r echo=TRUE}
-
-library(reactR)
-library(htmltools)
-
-script = loadScript()
-
-browsable(tagList(
-  tags$div(id = "app2"),
-  tags$script(
-    babel_transform(script)
-
-  ),
-  #add core-js first to work in RStudio Viewer
-  html_dependency_corejs(),
-  html_dependency_react()
-))
-```
-
-```{r echo=TRUE}
-
-# library(reactR)
-# library(htmltools)
-#
-# script = loadScript("dropZone.js")
-#
-# browsable(tagList(
-#   tags$div(id = "app3"),
-#   tags$script(
-#     babel_transform(script)
-#
-#   ),
-#   #add core-js first to work in RStudio Viewer
-#   html_dependency_corejs(),
-#   html_dependency_react()
-# ))
 ```
 
 5. Use the summary statistics and correlation you computed above to compute the slope of the regression line.
