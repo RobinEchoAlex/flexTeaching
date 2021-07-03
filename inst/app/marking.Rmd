@@ -30,6 +30,8 @@ Column {.sidebar}
 
 ```{r child="children/sidebar_solve.Rmd"}
 ```
+```{r child="children/sidebar_mark.Rmd"}
+```
 
 Column
 ------------------------------------
