@@ -10,8 +10,14 @@ uiOutput("responseBox")
 
 ```{r context="server"}
 output$responseBox <- renderUI({
-  # adds MathJax to the page and typeset the math expressions
-  HTML('<head><title>New Document</title></head><body><div id="id">456321</div><div id="input_q1">input_q1:153</div><div id="input_q1">input_q1:87</div></body>')
+  file = input$responses
+  req(file)
+  ext = tools::file_ext(file$datapath)
+  cat(ext)
+
+  htmlString = readr::read_file(file$datapath)
+  cat(htmlString,"\n")
+  return(HTML(htmlString))
 })
 ```
 
