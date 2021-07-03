@@ -18,6 +18,7 @@ runtime: shiny_prerendered
 # Load a lib that provides copy-to-clipboard functionality
 library(rclipboard)
 shiny::includeScript(path = system.file("lib/clipboard.min.js", package = "rclipboard"))
+
 ```
 
 
