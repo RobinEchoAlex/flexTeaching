@@ -53,6 +53,9 @@ solutions <- reactive({
 ```{r child="children/content.Rmd"}
 ```
 
+```{r child="children/student_response.Rmd"}
+```
+
 
 
 <script>

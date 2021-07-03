@@ -1,0 +1,19 @@
+
+
+### Response
+
+```{r context="render"}
+uiOutput("responseBox")
+```
+
+
+
+```{r context="server"}
+output$responseBox <- renderUI({
+  # adds MathJax to the page and typeset the math expressions
+  tagList(tags$h1("Test 1"),
+          tags$h2("Test 2"),
+          tags$p("Test 3"))
+})
+```
+
