@@ -1,4 +1,4 @@
-#' Source all the files indicated in the assignment data
+#' Source all the R files indicated in the assignment data
 #'
 #' @param assignment_data data for the particular assignment
 #' @param e environment in which to source
