@@ -8,14 +8,24 @@
 //     })
 // };
 
+// For testing only
+/*
 $(document).on('shiny:connected', function(event) {
     alert('Connected to the server');
 });
+*/
+
 
 $(document).on('shiny:value', function(event) {
-    // cancel the output of the element with id 'foo'
     if (event.target.id==='responseBox'){
-        alert(event.name+event.value+event.binding);
+        let doc = new DOMParser().parseFromString(event.value.html,"text/html");
+        debugger;
+        doc.querySelectorAll("[id^='stu_ans_']").forEach(function (node){
+            let input = document.createElement("input")
+            input.id = "mark_" + node.id
+            node.appendChild(input);
+        })
+        event.value.html = doc.body.innerHTML;
     }
 });
 

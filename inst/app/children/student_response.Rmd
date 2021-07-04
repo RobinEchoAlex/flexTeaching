@@ -15,18 +15,6 @@ output$responseBox <- renderUI({
   htmlString = readr::read_file(fileDf$datapath[[1]])
 
   session$sendCustomMessage("add_marking_component", "message");
-  shinyjs::extendShinyjs(text = ' shinyjs.addMarkingComponent =  function(params){
-        let doc = new DOMParser().parseFromString(params.htmlString,"text/xml")
-        doc.querySelectorAll("[id^="stu_ans_"]").forEach(function (node){
-        let input = doc.createElement("input")
-        input.id="mark_"+node.id
-        node.appendChild(input);
-        console.log(params.htmlString);
-        alert("fds")
-    })
-  }', functions = c("addMarkingComponent"));
-  #shinyjs::runjs("alert(params.alert)")
-  shinyjs::js$addMarkingComponent(htmlString = htmlString)
 
   return(HTML(htmlString))
 
