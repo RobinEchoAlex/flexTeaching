@@ -34,3 +34,8 @@ $(document).on('shiny:value', function(event) {
     }
 });
 
+Shiny.addCustomMessageHandler("testmessage",
+    function(message) {
+        alert(JSON.stringify(message));
+    }
+);
