@@ -6,6 +6,8 @@ uiOutput("responseBox")
 ```
 
 ```{r context="server"}
+varA = 1
+
 output$responseBox <- renderUI({
   fileDf = input$responses
   req(fileDf)
