@@ -2,7 +2,7 @@ compile_assignment_html <- function(path, envir = new.env(), ...){
   tmpfn = tempfile(fileext = ".html")
   input = file.path(path, "index.Rmd")
   output_format = rmarkdown::html_fragment(pandoc_args = c("--metadata", "title= " ) )
-  rmarkdown::render(input = input, output_file = tmpfn,
+  rmarkdown::render(input = input, output_file = tmpfn, output_format = output_format,
                     envir = envir, quiet = TRUE, ...)
   return(tmpfn)
 }
