@@ -5,8 +5,13 @@ fileInput(inputId = "responses",
           multiple = TRUE,
           accept = c(".html",".htm"))
 
-actionButton("responses_download","Download Feedback")
+actionButton("responses_download_button","Download Feedback")
 #TODO an forward and backward button, replaced by a scroll list in the future.
 ```
+```{r context="server"}
+    observeEvent(input$responses_download_button, {
+        shinyjs::alert("test")
+  })
 
+```
 
