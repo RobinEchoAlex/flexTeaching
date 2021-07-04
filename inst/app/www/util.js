@@ -15,16 +15,21 @@ $(document).on('shiny:connected', function(event) {
 });
 */
 
-
+/**
+ * When the responseBox receives new student response file,
+ * append a inputBox for mark into every <div> answer section, whose id is regulated to start with "stu_ans"
+ */
 $(document).on('shiny:value', function(event) {
     if (event.target.id==='responseBox'){
+        // student response html to DOM
         let doc = new DOMParser().parseFromString(event.value.html,"text/html");
-        debugger;
+        // append input box
         doc.querySelectorAll("[id^='stu_ans_']").forEach(function (node){
             let input = document.createElement("input")
             input.id = "mark_" + node.id
             node.appendChild(input);
         })
+        // update the html string to be rendered
         event.value.html = doc.body.innerHTML;
     }
 });
