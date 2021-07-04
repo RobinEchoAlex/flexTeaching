@@ -1,6 +1,6 @@
 // shinyjs.addMarkingComponent = function (params){
 //     alert("fds");
-//     let doc = new DOMParser().parseFromString(params.htmlString,"text/xml")
+//     let doc = new DOMParser().parseFromString(params.htmlString,"text/html")
 //     doc.querySelectorAll("div").forEach(function (node){
 //         let input = doc.createElement("input")
 //         input.id="mark_"+node.id
