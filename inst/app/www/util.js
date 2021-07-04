@@ -46,6 +46,7 @@ Shiny.addCustomMessageHandler("testmessage",
             $(this).replaceWith(dd);
         })
 
+        //TODO redundant code with test2_response_download.js
         var h = $('<html></html>')
         var b = $('<body></body>')
 
@@ -55,7 +56,7 @@ Shiny.addCustomMessageHandler("testmessage",
         $('<a></a>')
             .attr('id', 'marking_download')
             .attr('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(h[0].outerHTML))
-            .attr('download', 'responses.html')
+            .attr('download', 'marks.html')
             .hide()
             .appendTo('body')[0]
             .click()
