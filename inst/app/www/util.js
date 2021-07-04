@@ -19,12 +19,12 @@ $(document).on('shiny:connected', function(event) {
  * When the responseBox receives new student response file,
  * append a inputBox for mark into every <div> answer section, whose id is regulated to start with "stu_ans"
  */
-$(document).on('shiny:value', function(event) {
-    if (event.target.id==='responseBox'){
+$(document).on('shiny:value', function (event) {
+    if (event.target.id === 'responseBox') {
         // student response html to DOM
-        let doc = new DOMParser().parseFromString(event.value.html,"text/html");
+        let doc = new DOMParser().parseFromString(event.value.html, "text/html");
         // append input box
-        doc.querySelectorAll("[id^='stu_ans_']").forEach(function (node){
+        doc.querySelectorAll("[id^='stu_ans_']").forEach(function (node) {
             let input = document.createElement("input")
             input.id = "mark_" + node.id
             node.appendChild(input);
@@ -35,7 +35,31 @@ $(document).on('shiny:value', function(event) {
 });
 
 Shiny.addCustomMessageHandler("testmessage",
-    function(message) {
-        alert(JSON.stringify(message));
+    function (message) {
+        var responses = $("#responseBox").clone(true);
+        responses.find(":input").each(function () {
+            console.log(this.id+this.value);
+            debugger;
+            let dd= $('<dd>')
+                .attr("id", this.id)
+                .text(this.value);
+            $(this).replaceWith(dd);
+        })
+
+        var h = $('<html></html>')
+        var b = $('<body></body>')
+
+        b.appendTo(h)
+            .append(responses);
+
+        $('<a></a>')
+            .attr('id', 'marking_download')
+            .attr('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(h[0].outerHTML))
+            .attr('download', 'responses.html')
+            .hide()
+            .appendTo('body')[0]
+            .click()
+
+        $('#marking_download').remove()
     }
 );

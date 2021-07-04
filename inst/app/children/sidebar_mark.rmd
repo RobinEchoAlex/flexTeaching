@@ -10,7 +10,7 @@ actionButton("responses_download_button","Download Feedback")
 ```
 ```{r context="server"}
     observeEvent(input$responses_download_button, {
-      if (exists("varA")) {shinyjs::alert(varA);}
+      #if (exists("varA")) {shinyjs::alert(varA);}
       session$sendCustomMessage(type = 'testmessage',
                                 message = 'Thank you for clicking')
 
