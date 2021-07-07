@@ -31,3 +31,17 @@ data_file = function(assignment_data, id, seed, solutions, format, init, entry){
   d = readBin(con = tf, what = "raw", n = file.size(tf))
   return(list(fn = fn, d = d))
 }
+
+add_input_field = function(question_id,text_hint){ # TODO Integrate ID and hint?
+  # if names to "student_ans" the id will collapse with the response section, the id is converted when download
+  tag_id = paste0("student_attempt_",question_id)
+  text_hint = paste0(text_hint,": ")
+  return(
+    tagList(
+      tags$label(text_hint),
+      tags$input(id=tag_id),
+      tags$br()
+    )
+  )
+}
+

@@ -82,7 +82,9 @@ sum_stats %>%
 ```
 
 4. Compute the correlation between the two variables ``r cn[1]`` and ``r cn[2]``.
-
+```{r}
+add_input_field("q1","Q1")
+```
 ```{r results = 'asis', eval = .flexteach_solutions}
 r = cor(.flexteach_info$data)[2] %>%
   round(3)
@@ -135,9 +137,6 @@ data.frame(
 
 tags$div(id="standard_ans_q2",class="standard_ans",r2,style="visibility: hidden");
 ```
-
-<br/>
-<br/>
 
 
 ```{r eval = .flexteach_solutions}
