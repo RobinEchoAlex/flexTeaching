@@ -9,9 +9,13 @@ uiOutput("formatbox")
 session$allowReconnect(TRUE)
 
 output$idbox <- renderUI({
+  # If the query string has id specified, fill it into the input box
   query = getQueryString()
   seed = if ('id' %in% names(query)) query[['id']] else ""
+
   el = textInput("id", label = "ID:", width = "150px", value = seed, placeholder = "Your ID")
+
+  #The query string can disable the id inputfield
   if('id_disable' %in% names(query)){
     return(shinyjs::disabled(el))
   }else{
@@ -23,19 +27,20 @@ output$assignmentbox <- renderUI({
   query = getQueryString()
   assignment = query[['assignment']]
   flexTeaching:::getAssignments() %>%
-    {
+    { # drop assignment that need to be hidden, e.g. publish date not arrived yet
       if(is.null(assignment)){
         filter(., !hidden)
-      }else{
+      }else{ # But if the querysting has specify the hidden assignment, then it can be shown
         filter(., !hidden | (shortname == !!assignment))
       }
     } %>%
-    split(.$category) %>%
-    purrr::map(function(el){
+    split(.$category) %>% # split by category
+    purrr::map(function(el){ # extract the shortname as the displayed label
       z = pull(el, shortname)
       names(z) = pull(el, title)
       return(z)
     }) -> assignments
+
   el = selectInput("assignment", label = "Assignment:", width = "150px", choices = assignments, selected = assignment)
   if('assignment_disable' %in% names(query)){
     return(shinyjs::disabled(el))

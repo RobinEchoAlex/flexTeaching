@@ -1,7 +1,7 @@
 #' Get a list of assignments in a directory
 #'
 #' @param path Directory path
-#' @param simple return only a named vector (for selectInput) 
+#' @param simple return simplify infomation only
 #'
 #' @importFrom yaml read_yaml
 #' @importFrom purrr map_df map set_names
@@ -11,12 +11,14 @@
 getAssignments = function(path = system.file("assignments", package = "flexTeaching"), simple = TRUE){
    
   date_format = flexTeaching::pkg_options()$date_format_yaml
-  
+
+  # Treat all direct sub dir in the given path as potential dirs for assignment
   potential_dirs = list.dirs(path, recursive = FALSE) 
   potential_dirs = potential_dirs[ grepl("^[^_]", basename(potential_dirs)) ] 
   
   potential_dirs %>%
     purrr::map(function(d){
+      # Try to locate the _assignment.yml file directly under each sub folder
       fp = file.path(d,"_assignment.yml")
       if(file.exists(fp)){
         y = yaml::read_yaml(fp)
@@ -36,11 +38,13 @@ getAssignments = function(path = system.file("assignments", package = "flexTeach
         return(NULL)
       }
     }) %>%
-    Filter(length, .) -> dirs
-  
+    Filter(length, .) -> dirs #Filter out the null object returned by the above phrase
+
+  # the name of each config object is set to the 'shortname' of this assignment
   names(dirs) = purrr::map_chr(dirs, ~`$`(., 'shortname'))
   if(!simple) return(dirs)
-  
+
+  # If caller specify simple = 1, only retain the below 5 infos in the config object
   purrr::map_df(dirs, function(el){
     bind_rows(category = el$category, 
               title = el$title, 

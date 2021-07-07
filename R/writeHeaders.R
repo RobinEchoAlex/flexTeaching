@@ -1,4 +1,4 @@
-#' Gether file content to include in the header
+#' Gather file content to include in the header
 #'
 #'
 #' @return
@@ -18,6 +18,7 @@ writeHeaders = function(){
   
   for(a in all_paths){
     # CSS
+    # Apply CSS stylesheet to all html tags
     fs = dir(file.path(a, "include/css/"), full.names = TRUE, include.dirs = FALSE)
     for(f in fs){
       lns = paste(readLines(f), collapse="\n")
@@ -26,6 +27,7 @@ writeHeaders = function(){
     }
     
     # JS
+    # Apply js script to all htm tags
     fs = dir(file.path(a, "include/js/"), full.names = TRUE, include.dirs = FALSE)
     for(f in fs){
       lns = paste(readLines(f), collapse="\n")
@@ -34,6 +36,7 @@ writeHeaders = function(){
     }    
     
     # HTML
+    # Concatenate all html content
     fs = dir(file.path(a, "include/html/"), full.names = TRUE, include.dirs = FALSE)
     for(f in fs){
       lns = paste(readLines(f), collapse="\n")
@@ -42,7 +45,8 @@ writeHeaders = function(){
     }
     
   }
-  
+
+  # Combine all above together
   all.content = paste(html.content, as.character(allTags), sep="\n")
   file = tempfile()
   writeLines( all.content, con = file )

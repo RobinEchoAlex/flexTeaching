@@ -18,7 +18,8 @@ compilePage <- function(assignment_data, id, seed, solutions, e, init_list = lis
   
   e$.flexteach_solutions = solutions
   e$.flexteach_info = init_list
-  
+
+  # function pointer
   compile_assignment = get(assignment_data$`html-gen`, envir = e)
 
   R.utils::withSeed({

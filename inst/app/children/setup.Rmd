@@ -11,6 +11,7 @@ globals = new.env()
 ```
 
 ```{r, echo=FALSE}
+# Boilerplate code for importing shinyjs in rmd, the same below
 shiny::addResourcePath("shinyjs", system.file("srcjs", package = "shinyjs"))
 ```
 ```{r, context="server"}

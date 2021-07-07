@@ -34,6 +34,8 @@ function responseDownload() {
 
 }
 
+
+
 ReactDOM.render(
     <div>
         <input id='input_q2'/>
@@ -45,4 +47,3 @@ ReactDOM.render(
     ,
     document.getElementById("app2")
 )
-

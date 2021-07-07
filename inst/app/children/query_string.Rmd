@@ -1,5 +1,5 @@
 ```{r context='server'}
-# Glue the ui component input with the URL query string
+# Update the query string to match the value of input field instantly
 observeEvent(c(input$assignment, input$id, input$format, solutions(), seed()), {
   
   req(

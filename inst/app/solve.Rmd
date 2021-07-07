@@ -51,8 +51,6 @@ solutions <- reactive({
 ```{r child="children/content.Rmd"}
 ```
 
-
-
 <script>
 //Clicking the "show_admin" button (un)folds the admin panel
 $(document).ready(function () {

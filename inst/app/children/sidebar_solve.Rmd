@@ -2,7 +2,7 @@
 
 uiOutput("solutionsbox")
 
-htmltools::tags$div(
+htmltools::tags$div( # TODO clickable visual clue
   "Show admin",
   id = "show_admin"
 )
@@ -19,6 +19,7 @@ htmltools::tags$div(
 
 ```{r context="server"}
 output$seedbox <- renderUI({
+  # If the seed is not specified in querysting, set to "s33d"
   query = getQueryString()
   seed = if ('seed' %in% names(query)) query[['seed']] else "s33d"
   globals$first_seed = seed
@@ -48,7 +49,7 @@ output$masterseedbox <- renderUI({
 output$solutionsbox <- renderUI({
   query = getQueryString()
   sol = if ('solutions' %in% names(query)) query[['solutions']] else FALSE
-  sol = as.logical(sol)
+  sol = as.logical(sol) #Convert char logical counterparts to logical constants
   el = checkboxInput("solutions", label = "Show solutions?", value = as.logical(sol))
   if('solutions_disable' %in% names(query)){
     return(shinyjs::disabled(el))
@@ -65,7 +66,7 @@ observeEvent(input$masterseed, {
 
   if(input$masterseed == ""){
     seed = globals$first_seed
-  }else{
+  }else{ # Calcuate animal seed based on inputed master seed and assignment salt
     salt = all_assignment_data[[input$assignment]]$`seed-salt`
     seed = flexTeaching:::animalSeed(input$masterseed, salt)
   }
@@ -82,6 +83,7 @@ observeEvent(input$assignment, {
 
   if(input$masterseed == "") return()
 
+  # Calcuate new animal seed based on inputed master seed and assignment salt when selected assignment changed
   salt = all_assignment_data[[input$assignment]]$`seed-salt`
   seed = flexTeaching:::animalSeed(input$masterseed, salt)
 
