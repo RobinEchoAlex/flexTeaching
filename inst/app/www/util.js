@@ -21,10 +21,32 @@ $(document).on('shiny:connected', function(event) {
  */
 $(document).on('shiny:value', function (event) {
     if (event.target.id === 'responseBox') {
+        debugger;
+        if (!document.getElementById('solutions').checked){
+            document.getElementById('solutions').checked = true
+        }
+
         // student response html to DOM
         let doc = new DOMParser().parseFromString(event.value.html, "text/html");
+
+        if (document.getElementById("id").value!==doc.getElementById("id").innerText){
+            Shiny.setInputValue("id", doc.getElementById("id").innerText);
+            document.getElementById("id").value = doc.getElementById("id").innerText;
+        }
+
         // append input box
-        doc.querySelectorAll("[id^='stu_ans_']").forEach(function (node) {
+        doc.querySelectorAll("div.student_ans").forEach(function (node) {
+            let questionNumber = node.id.substring(12,node.id.length); //TODO hardcode
+            let ans = parseFloat(node.querySelector("dd").innerText)
+            let standardAnsId = "#"+"standard_ans_"+questionNumber
+            let standard_ans = parseFloat(document.querySelector(standardAnsId).textContent)
+            let isCorrect = Math.abs(standard_ans-ans)<0.1 //TODO hardcode threshold
+
+            let isCorrectOutput = document.createElement("p")
+            let textNode = document.createTextNode( isCorrect ? "Correct" : "Incorrect");
+            isCorrectOutput.appendChild(textNode);
+            node.appendChild(isCorrectOutput)
+
             let input = document.createElement("input")
             input.id = "mark_" + node.id
             node.appendChild(input);

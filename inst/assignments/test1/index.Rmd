@@ -73,6 +73,7 @@ abline(lm(y ~ x, data = .flexteach_info$data))
     SD = sd(x)
     ) -> sum_stats
 
+
 sum_stats %>%
   gt(rowname_col = "variable") %>%
   cols_label(SD = "Std. Dev.") %>%
@@ -86,7 +87,9 @@ sum_stats %>%
 r = cor(.flexteach_info$data)[2] %>%
   round(3)
 glue::glue("> The correlation is {r}.") %>%
-  cat()
+cat()
+
+tags$div(id="standard_ans_q1",class="standard_ans",r,style="visibility: hidden");
 ```
 
 5. Use the summary statistics and correlation you computed above to compute the slope of the regression line.
@@ -130,6 +133,7 @@ data.frame(
   fmt_number(c("R","r2","ar2","s"), decimals = 3) %>%
   tab_header("Model summary")
 
+tags$div(id="standard_ans_q2",class="standard_ans",r2,style="visibility: hidden");
 ```
 
 <br/>
