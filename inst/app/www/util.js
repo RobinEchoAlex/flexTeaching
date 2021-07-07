@@ -28,8 +28,8 @@ $(document).on('shiny:value', function (event) {
 
         //TODO not working // If the solutions is not shown (so the std_ans is not calculated), check the box
         if (!document.getElementById('solutions').checked){
-            Shiny.setInputValue("solutions",true)
             document.getElementById('solutions').checked = true
+            Shiny.setInputValue("solutions",true, {priority: "event"})
         }
 
         // Match the id field with current student's, hence load the correct dataset for him.
@@ -60,7 +60,7 @@ $(document).on('shiny:value', function (event) {
     }
 });
 
-Shiny.addCustomMessageHandler("testmessage",
+Shiny.addCustomMessageHandler("marking_download_onClick",
     function (message) {
         var responses = $("#responseBox").clone(true);
         responses.find(":input").each(function () {
