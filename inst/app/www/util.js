@@ -22,19 +22,23 @@ $(document).on('shiny:connected', function(event) {
 $(document).on('shiny:value', function (event) {
     if (event.target.id === 'responseBox') {
         debugger;
-        if (!document.getElementById('solutions').checked){
-            document.getElementById('solutions').checked = true
-        }
 
         // student response html to DOM
         let doc = new DOMParser().parseFromString(event.value.html, "text/html");
 
+        //TODO not working // If the solutions is not shown (so the std_ans is not calculated), check the box
+        if (!document.getElementById('solutions').checked){
+            Shiny.setInputValue("solutions",true)
+            document.getElementById('solutions').checked = true
+        }
+
+        // Match the id field with current student's, hence load the correct dataset for him.
         if (document.getElementById("id").value!==doc.getElementById("id").innerText){
             Shiny.setInputValue("id", doc.getElementById("id").innerText);
             document.getElementById("id").value = doc.getElementById("id").innerText;
         }
 
-        // append input box
+        // Append objective questions' correctness and mark awarding field to every student_ans div tag
         doc.querySelectorAll("div.student_ans").forEach(function (node) {
             let questionNumber = node.id.substring(12,node.id.length); //TODO hardcode
             let ans = parseFloat(node.querySelector("dd").innerText)
@@ -51,7 +55,7 @@ $(document).on('shiny:value', function (event) {
             input.id = "mark_" + node.id
             node.appendChild(input);
         })
-        // update the html string to be rendered
+        // Update the html string to be rendered
         event.value.html = doc.body.innerHTML;
     }
 });
