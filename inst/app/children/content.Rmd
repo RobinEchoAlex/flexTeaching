@@ -128,7 +128,9 @@ output$buttonBox <- renderUI({
                           icon = icon(bs[[b]]$icon))
   })
 
+
   do.call(tagList, bl)
+
 })
 
 shinyjs::onclick("button_data", function() { if (is.null(id) || input$id == "") shinyjs::info("Warning: The ID field is empty so 0 mark will be given if you submit answer for this dataset.") })
