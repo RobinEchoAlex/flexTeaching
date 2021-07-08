@@ -212,3 +212,4 @@ cat(
 ")
 ```
 
+<button onclick=responseDownload()>download response</button>

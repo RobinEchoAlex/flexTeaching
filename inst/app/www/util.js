@@ -91,4 +91,65 @@ Shiny.addCustomMessageHandler("marking_download_onClick",
     }
 );
 
+Shiny.addCustomMessageHandler("response_download_onClick", {
+    function(id) {
+        responseDownload(id);
+    }
+});
+
+function responseDownload(id){
+    debugger;
+    //TODO pass id when called from js
+        if (id == null) {
+        id = "Warning: ID is not defined"
+    }
+
+    //a new doc containing all responses and to be downloaded
+    let doc = document.implementation.createHTMLDocument("Assignment Response");
+
+    let idDiv = doc.createElement('div');
+    idDiv.id = "id";
+    idDiv.textContent = id;
+    doc.body.appendChild(idDiv);
+
+    let dl = doc.createElement("dl");
+    doc.body.appendChild(dl);
+
+    //TODO rename the div tag
+    //fetch the value of all input fields (whose id starts with "input") //TODO easy violation
+    document.querySelectorAll('[id^="student_attempt_"]').forEach(function (node) {
+            console.log(node.id);
+            console.log(node.value);
+
+            let div = doc.createElement('div');
+            div.class = "student_ans"
+            div.id = node.id;
+            if (node.nodeName === "INPUT") {
+                let dt = doc.createElement("dt");
+                dt.innerText = node.id;
+                let dl = doc.createElement("dl");
+                dl.innerText = node.value;
+                div.appendChild(dt);
+                div.appendChild(dl);
+
+            } else if (node.nodeName === "DIV") {
+                let ql_editor = node.querySelector(".ql-editor").cloneNode(true);
+                div.appendChild(ql_editor);
+            }
+            dl.appendChild(div);
+        }
+    );
+
+    //Assemble the blob that contains the HTML
+    let blob = new Blob([doc.body.innerHTML]);
+    let url = window.URL.createObjectURL(blob);
+    let filename = 'response.html';
+
+    // Trigger auto download
+    let aDownload = document.createElement('a');
+    aDownload.href = url;
+    aDownload.download = filename;
+    aDownload.click();
+}
+
 
