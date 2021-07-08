@@ -14,6 +14,8 @@ $(document).on('shiny:connected', function(event) {
     alert('Connected to the server');
 });
 */
+const STU_ANS_TAG_PREFIX = "student_ans_"
+const STU_ATP_TAG_PREFIX = "student_attempt_"
 
 /**
  * When the responseBox receives new student response file,
@@ -26,7 +28,7 @@ $(document).on('shiny:value', function (event) {
         // student response html to DOM
         let doc = new DOMParser().parseFromString(event.value.html, "text/html");
 
-        //TODO not working // If the solutions is not shown (so the std_ans is not calculated), check the box
+        //TODO not working properly // If the solutions is not shown (so the std_ans is not calculated), check the box
         if (!document.getElementById('solutions').checked){
             document.getElementById('solutions').checked = true
             Shiny.setInputValue("solutions",true, {priority: "event"})
@@ -117,20 +119,20 @@ function responseDownload(id){
 
     //TODO rename the div tag
     //fetch the value of all input fields (whose id starts with "input") //TODO easy violation
-    document.querySelectorAll('[id^="student_attempt_"]').forEach(function (node) {
+    document.querySelectorAll('[id^=${STU_ATP_TAG_PREFIX}]').forEach(function (node) {
             console.log(node.id);
             console.log(node.value);
 
             let div = doc.createElement('div');
-            div.class = "student_ans"
+            div.className = "student_ans"
             div.id = node.id;
             if (node.nodeName === "INPUT") {
                 let dt = doc.createElement("dt");
                 dt.innerText = node.id;
-                let dl = doc.createElement("dl");
-                dl.innerText = node.value;
+                let dd = doc.createElement("dd");
+                dd.innerText = node.value;
                 div.appendChild(dt);
-                div.appendChild(dl);
+                div.appendChild(dd);
 
             } else if (node.nodeName === "DIV") {
                 let ql_editor = node.querySelector(".ql-editor").cloneNode(true);
