@@ -194,7 +194,20 @@ cat(
 
 <!-- Initialize Quill editor -->
 <script>
+
+var toolbarOptions = [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      ['image', 'formula','code-block']
+];
+
+
   var quill = new Quill('#editor', {
+  modules: {
+    toolbar: toolbarOptions
+  },
     theme: 'snow'
   });
 </script>
