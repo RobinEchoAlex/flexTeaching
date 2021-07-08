@@ -98,29 +98,25 @@ Shiny.addCustomMessageHandler("marking_download_onClick",
 
 Shiny.addCustomMessageHandler("response_download_onClick", {
     function(id) {
-        responseDownload(id);
+        responseDownload();
     }
 });
 
-function responseDownload(id) {
-    //TODO pass id when called from js
-    if (id == null) {
-        id = "Warning: ID is not defined"
-    }
-
+function responseDownload() {
     //a new doc containing all responses and to be downloaded
     let doc = document.implementation.createHTMLDocument("Assignment Response");
-
     let link = doc.createElement("link");
+
     link.rel ="stylesheet";
     link.href = "https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css";
     link.integrity = "sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc";
     link.crossOrigin= "anonymous";
     doc.body.appendChild(link);
 
+    let id = document.querySelector('#id');
     let idDiv = doc.createElement('div');
     idDiv.id = "id";
-    idDiv.textContent = id;
+    idDiv.textContent = (id!=null && id!=="") ? id.value : "ID IS NOT DEFINED";
     doc.body.appendChild(idDiv);
 
     let dl = doc.createElement("dl");
