@@ -61,6 +61,7 @@ plot(.flexteach_info$data, pch = 19, col = rgb(0,0,0,.3), cex = .8, las = 1)
 abline(lm(y ~ x, data = .flexteach_info$data))
 ```
 
+
 3. Compute the mean and standard deviation of each of the two variables, ``r cn[1]`` and ``r cn[2]``.
 
 ```{r eval = .flexteach_solutions}
@@ -82,16 +83,17 @@ sum_stats %>%
 ```
 
 4. Compute the correlation between the two variables ``r cn[1]`` and ``r cn[2]``.
-```{r}
-add_input_field("q1","Q1")
-```
+
 ```{r results = 'asis', eval = .flexteach_solutions}
 r = cor(.flexteach_info$data)[2] %>%
   round(3)
 glue::glue("> The correlation is {r}.") %>%
 cat()
 
-tags$div(id="standard_ans_q1",class="standard_ans",r,style="visibility: hidden");
+tags$div(id="standard_ans_q4",class="standard_ans",r,style="visibility: hidden");
+```
+```{r}
+add_input_field("q4","Q4")
 ```
 
 5. Use the summary statistics and correlation you computed above to compute the slope of the regression line.
@@ -105,7 +107,31 @@ tags$div(id="standard_ans_q1",class="standard_ans",r,style="visibility: hidden")
 ```{r eval = .flexteach_solutions, child='children/intercept.Rmd'}
 ```
 
+<!-- Create the editor container -->
+<div id="student_attempt_q6">
 
+</div>
+
+
+<!-- Initialize Quill editor -->
+<script>
+// Ref: https://quilljs.com/docs/formats/
+var toolbarOptions = [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      ['image', 'formula','code-block']
+];
+
+  var quill = new Quill('#student_attempt_q6', {
+  modules: {
+    toolbar: toolbarOptions
+  },
+    placeholder: 'Enter your answer to Question 6',
+    theme: 'snow'
+  });
+</script>
 
 7. Perform a linear regression analysis in SPSS.
 
@@ -135,9 +161,11 @@ data.frame(
   fmt_number(c("R","r2","ar2","s"), decimals = 3) %>%
   tab_header("Model summary")
 
-tags$div(id="standard_ans_q2",class="standard_ans",r2,style="visibility: hidden");
+tags$div(id="standard_ans_q7",class="standard_ans",r2,style="visibility: hidden");
 ```
-
+```{r}
+add_input_field("q7","Q7")
+```
 
 ```{r eval = .flexteach_solutions}
 
@@ -184,30 +212,3 @@ cat(
 ")
 ```
 
-<!-- Create the editor container -->
-<div id="editor">
-  <p>Hello World!</p>
-  <p>Some initial <strong>bold</strong> text</p>
-  <p><br></p>
-</div>
-
-
-<!-- Initialize Quill editor -->
-<script>
-// Ref: https://quilljs.com/docs/formats/
-var toolbarOptions = [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      ['image', 'formula','code-block']
-];
-
-
-  var quill = new Quill('#editor', {
-  modules: {
-    toolbar: toolbarOptions
-  },
-    theme: 'snow'
-  });
-</script>
