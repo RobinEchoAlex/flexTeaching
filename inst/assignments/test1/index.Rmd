@@ -194,7 +194,7 @@ cat(
 
 <!-- Initialize Quill editor -->
 <script>
-
+// Ref: https://quilljs.com/docs/formats/
 var toolbarOptions = [
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline'],
