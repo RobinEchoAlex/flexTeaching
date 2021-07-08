@@ -23,33 +23,33 @@ const STU_ATP_TAG_PREFIX = "student_attempt_"
  */
 $(document).on('shiny:value', function (event) {
     if (event.target.id === 'responseBox') {
-        debugger;
 
         // student response html to DOM
         let doc = new DOMParser().parseFromString(event.value.html, "text/html");
 
         //TODO not working properly // If the solutions is not shown (so the std_ans is not calculated), check the box
-        if (!document.getElementById('solutions').checked){
+        if (!document.getElementById('solutions').checked) {
             document.getElementById('solutions').checked = true
-            Shiny.setInputValue("solutions",true, {priority: "event"})
+            Shiny.setInputValue("solutions", true, {priority: "event"})
         }
 
         // Match the id field with current student's, hence load the correct dataset for him.
-        if (document.getElementById("id").value!==doc.getElementById("id").innerText){
+        if (document.getElementById("id").value !== doc.getElementById("id").innerText) {
             Shiny.setInputValue("id", doc.getElementById("id").innerText);
             document.getElementById("id").value = doc.getElementById("id").innerText;
         }
 
         // Append objective questions' correctness and mark awarding field to every student_ans div tag
         doc.querySelectorAll("div.student_ans").forEach(function (node) {
-            let questionNumber = node.id.substring(12,node.id.length); //TODO hardcode
+            debugger;
+            let questionNumber = node.id.substring(12, node.id.length); //TODO hardcode
             let ans = parseFloat(node.querySelector("dd").innerText)
             let standardAnsId = "#"+"standard_ans_"+questionNumber
             let standard_ans = parseFloat(document.querySelector(standardAnsId).textContent)
-            let isCorrect = Math.abs(standard_ans-ans)<0.1 //TODO hardcode threshold
+            let isCorrect = Math.abs(standard_ans - ans) < 0.1 //TODO hardcode threshold
 
             let isCorrectOutput = document.createElement("p")
-            let textNode = document.createTextNode( isCorrect ? "Correct" : "Incorrect");
+            let textNode = document.createTextNode(isCorrect ? "Correct" : "Incorrect");
             isCorrectOutput.appendChild(textNode);
             node.appendChild(isCorrectOutput)
 
@@ -66,9 +66,9 @@ Shiny.addCustomMessageHandler("marking_download_onClick",
     function (message) {
         var responses = $("#responseBox").clone(true);
         responses.find(":input").each(function () {
-            console.log(this.id+this.value);
+            console.log(this.id + this.value);
             debugger;
-            let dd= $('<dd>')
+            let dd = $('<dd>')
                 .attr("id", this.id)
                 .text(this.value);
             $(this).replaceWith(dd);
@@ -99,10 +99,9 @@ Shiny.addCustomMessageHandler("response_download_onClick", {
     }
 });
 
-function responseDownload(id){
-    debugger;
+function responseDownload(id) {
     //TODO pass id when called from js
-        if (id == null) {
+    if (id == null) {
         id = "Warning: ID is not defined"
     }
 
@@ -125,19 +124,19 @@ function responseDownload(id){
 
             let div = doc.createElement('div');
             div.className = "student_ans"
-            div.id = node.id;
+            div.id = node.id.replace(STU_ATP_TAG_PREFIX, STU_ANS_TAG_PREFIX);
+            let dt = doc.createElement("dt");
+            let dd = doc.createElement("dd");
             if (node.nodeName === "INPUT") {
-                let dt = doc.createElement("dt");
                 dt.innerText = node.id;
-                let dd = doc.createElement("dd");
                 dd.innerText = node.value;
-                div.appendChild(dt);
-                div.appendChild(dd);
-
             } else if (node.nodeName === "DIV") {
                 let ql_editor = node.querySelector(".ql-editor").cloneNode(true);
-                div.appendChild(ql_editor);
+                dt.innerText = node.id;
+                dd.appendChild(ql_editor);
             }
+            div.appendChild(dt);
+            div.appendChild(dd);
             dl.appendChild(div);
         }
     );
