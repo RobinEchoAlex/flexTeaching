@@ -9,6 +9,14 @@ all_assignment_data =  flexTeaching:::getAssignments(simple = FALSE)
 
 globals = new.env()
 ```
+```{r context='setup'}
+# https://stackoverflow.com/questions/23599268/include-a-javascript-file-in-shiny-app
+# TODO move to setup.rmd
+HTML('<head>
+              <script type="text/javascript" src="www/util.js"></script>
+          </head>')
+
+```
 
 ```{r, echo=FALSE}
 # Boilerplate code for importing shinyjs in rmd, the same below
