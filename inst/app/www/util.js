@@ -111,6 +111,13 @@ function responseDownload(id) {
     //a new doc containing all responses and to be downloaded
     let doc = document.implementation.createHTMLDocument("Assignment Response");
 
+    let link = doc.createElement("link");
+    link.rel ="stylesheet";
+    link.href = "https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css";
+    link.integrity = "sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc";
+    link.crossOrigin= "anonymous";
+    doc.body.appendChild(link);
+
     let idDiv = doc.createElement('div');
     idDiv.id = "id";
     idDiv.textContent = id;
