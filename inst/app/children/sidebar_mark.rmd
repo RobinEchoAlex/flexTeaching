@@ -18,5 +18,19 @@ actionButton("next_responses_button","->")
 
   })
 
+observeEvent(input$previous_responses_button, {
+  #if (exists("varA")) {shinyjs::alert(varA);}
+  session$sendCustomMessage(type = 'previous_response_onclick',
+                            message = '')
+
+})
+
+observeEvent(input$next_responses_button, {
+  #if (exists("varA")) {shinyjs::alert(varA);}
+  session$sendCustomMessage(type = 'next_response_onclick',
+                            message = '')
+
+})
+
 ```
 

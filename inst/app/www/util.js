@@ -21,6 +21,7 @@ const STU_ATP_TAG_PREFIX = "student_attempt_"
  * When the responseBox receives new student response file,
  * append a inputBox for mark into every <div> answer section, whose id is regulated to start with "stu_ans"
  */
+/*
 $(document).on('shiny:value', function (event) {
     if (event.target.id === 'responseBox') {
 
@@ -64,6 +65,7 @@ $(document).on('shiny:value', function (event) {
         event.value.html = doc.body.innerHTML;
     }
 });
+*/
 
 Shiny.addCustomMessageHandler("marking_download_onClick",
     function (message) {

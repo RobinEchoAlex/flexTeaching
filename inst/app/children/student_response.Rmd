@@ -8,16 +8,21 @@ uiOutput("responseBox")
 ```{r context="server"}
 # varA = 1
 
-output$responseBox <- renderUI({
+observeEvent(input$responses,{
   fileDf = input$responses
   req(fileDf)
 
   print(fileDf$datapath)
 
-  htmlString = readr::read_file(fileDf$datapath[[1]])
+  htmlStrings = c();
+  for (i in 1:length(fileDf$datapath)){
+    htmlString = readr::read_file(fileDf$datapath[[i]])
+    print(htmlString)
+    htmlStrings = c(htmlStrings,htmlString)
+  }
 
-  session$sendCustomMessage("add_marking_component", "message");
-
+  session$sendCustomMessage("init_response_storage",htmlStrings);
+  # session$sendCustomMessage("add_marking_component", "message");
   return(HTML(htmlString))
 
 })

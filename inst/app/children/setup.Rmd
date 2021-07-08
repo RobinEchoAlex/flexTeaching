@@ -14,6 +14,7 @@ globals = new.env()
 # TODO move to setup.rmd
 HTML('<head>
               <script type="text/javascript" src="www/util.js"></script>
+              <script type="text/javascript" src="www/responseStroage.js"></script>
           </head>')
 
 ```
