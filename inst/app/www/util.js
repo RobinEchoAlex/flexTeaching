@@ -119,7 +119,7 @@ function responseDownload(id){
 
     //TODO rename the div tag
     //fetch the value of all input fields (whose id starts with "input") //TODO easy violation
-    document.querySelectorAll('[id^=${STU_ATP_TAG_PREFIX}]').forEach(function (node) {
+    document.querySelectorAll(`[id^=${STU_ATP_TAG_PREFIX}]`).forEach(function (node) {
             console.log(node.id);
             console.log(node.value);
 
