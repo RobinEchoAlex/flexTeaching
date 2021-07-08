@@ -44,7 +44,10 @@ $(document).on('shiny:value', function (event) {
             debugger;
             let questionNumber = node.id.substring(12, node.id.length); //TODO hardcode
             let ans = parseFloat(node.querySelector("dd").innerText)
-            let standardAnsId = "#"+"standard_ans_"+questionNumber
+            if (node.querySelector(".ql-editor") !=null) {
+                return;
+            }
+            let standardAnsId = "#" + "standard_ans_" + questionNumber
             let standard_ans = parseFloat(document.querySelector(standardAnsId).textContent)
             let isCorrect = Math.abs(standard_ans - ans) < 0.1 //TODO hardcode threshold
 
