@@ -7,6 +7,8 @@ fileInput(inputId = "responses",
 
 actionButton("responses_download_button","Download Feedback")
 #TODO an forward and backward button, replaced by a scroll list in the future.
+actionButton("previous_responses_button","<-")
+actionButton("next_responses_button","->")
 ```
 ```{r context="server"}
     observeEvent(input$responses_download_button, {
