@@ -96,11 +96,11 @@ Shiny.addCustomMessageHandler("marking_download_onClick",
     }
 );
 
-Shiny.addCustomMessageHandler("response_download_onClick", {
+Shiny.addCustomMessageHandler("response_download_onClick",
     function(id) {
-        responseDownload();
+       responseDownload();
     }
-});
+);
 
 function responseDownload() {
     //a new doc containing all responses and to be downloaded
