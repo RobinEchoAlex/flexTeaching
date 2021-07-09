@@ -1,5 +1,8 @@
 ```{r setup, include=FALSE, context="setup"}
 options(shiny.fullstacktrace = TRUE)
+library(broom)
+library(gt)
+library(tidyr)
 library(flexdashboard)
 library(magrittr)
 library(dplyr)
