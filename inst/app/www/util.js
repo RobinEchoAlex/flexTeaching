@@ -17,7 +17,7 @@ function markingDownload(){
         })
 
         //todo throw error/handle students with same id
-        let filename ="example."+ markedDoc.getElementById("id").innerText+".html"
+        let filename =markedDoc.getElementById("id").innerText+".html"
         zip.file(filename,markedDoc.body.innerHTML);
     }
 
