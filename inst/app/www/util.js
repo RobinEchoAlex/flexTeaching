@@ -5,36 +5,23 @@ const STU_ATP_TAG_PREFIX = "student_attempt_"
 function markingDownload(){
     var zip = new JSZip();
 
-    var responses = $("#responseBox").clone(true);
-    responses.find(":input").each(function () {
-        console.log(this.id + this.value);
-        debugger;
-        let dd = $('<dd>')
-            .attr("id", this.id)
-            .text(this.value);
-        $(this).replaceWith(dd);
-    })
+    saveCurrentResponse();
 
-    //TODO redundant code with test2_response_download.js
-    var h = $('<html></html>')
-    var b = $('<body></body>')
 
-    b.appendTo(h)
-        .append(responses);
+    for (let i=0;i< responseStorage.length ;i++){
+        let responses = responseStorage[i].cloneNode(true);
+        responses.querySelectorAll("input").forEach(function (node) {
+            let dd = responses.createElement("dd");
+            dd.id =  node.id;
+            dd.innerText = node.value;
+            node.replaceWith(dd);
+        })
 
-    // $('<a></a>')
-    //     .attr('id', 'marking_download')
-    //     .attr('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(h[0].outerHTML))
-    //     .attr('download', 'marks.html')
-    //     .hide()
-    //     .appendTo('body')[0]
-    //     .click()
-    //
-    // $('#marking_download').remove()
+        //todo throw error/handle students with same id
+        let filename ="example."+ responses.getElementById("id").innerText+".html"
+        zip.file(filename,responses.body.innerHTML);
+    }
 
-    let filename ="example.html"
-    debugger;
-    zip.file(filename,b.html());
     zip.generateAsync({type:"blob"})
         .then(function(content) {
             saveAs(content, "example.zip");
