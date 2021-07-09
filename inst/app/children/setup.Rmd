@@ -13,8 +13,10 @@ globals = new.env()
 # https://stackoverflow.com/questions/23599268/include-a-javascript-file-in-shiny-app
 # TODO move to setup.rmd
 HTML('<head>
+               <script type="module" src="www/jszip-3.6.0/dist/jszip.js"></script>
               <script type="text/javascript" src="www/util.js"></script>
               <script type="text/javascript" src="www/responseStroage.js"></script>
+
           </head>')
 
 ```

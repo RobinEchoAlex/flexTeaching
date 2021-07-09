@@ -1,3 +1,6 @@
+//import {JSZip} from './jszip-3.6.0/dist/jszip.min.js'
+//import JSZip from 'jszip-3.6.0';
+
 var responseStorage = Array();
 var currentResponseNum =0;
 
@@ -20,6 +23,8 @@ function displayPreviousResponse() {
 }
 
 function initStorage(htmlStrings) {
+    var zip = new JSZip();
+    debugger;
     currentResponseNum = 0;
     responseStorage =Array();
 
