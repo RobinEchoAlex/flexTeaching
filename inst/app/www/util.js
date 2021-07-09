@@ -1,42 +1,45 @@
 const STU_ANS_TAG_PREFIX = "student_ans_"
 const STU_ATP_TAG_PREFIX = "student_attempt_"
 
-Shiny.addCustomMessageHandler("marking_download_onClick",
-    function (message) {
-        var responses = $("#responseBox").clone(true);
-        responses.find(":input").each(function () {
-            console.log(this.id + this.value);
-            debugger;
-            let dd = $('<dd>')
-                .attr("id", this.id)
-                .text(this.value);
-            $(this).replaceWith(dd);
-        })
 
-        //TODO redundant code with test2_response_download.js
-        var h = $('<html></html>')
-        var b = $('<body></body>')
+function markingDownload(){
+    var zip = new JSZip();
 
-        b.appendTo(h)
-            .append(responses);
+    var responses = $("#responseBox").clone(true);
+    responses.find(":input").each(function () {
+        console.log(this.id + this.value);
+        debugger;
+        let dd = $('<dd>')
+            .attr("id", this.id)
+            .text(this.value);
+        $(this).replaceWith(dd);
+    })
 
-        $('<a></a>')
-            .attr('id', 'marking_download')
-            .attr('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(h[0].outerHTML))
-            .attr('download', 'marks.html')
-            .hide()
-            .appendTo('body')[0]
-            .click()
+    //TODO redundant code with test2_response_download.js
+    var h = $('<html></html>')
+    var b = $('<body></body>')
 
-        $('#marking_download').remove()
-    }
-);
+    b.appendTo(h)
+        .append(responses);
 
-Shiny.addCustomMessageHandler("response_download_onClick",
-    function(id) {
-       responseDownload();
-    }
-);
+    // $('<a></a>')
+    //     .attr('id', 'marking_download')
+    //     .attr('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(h[0].outerHTML))
+    //     .attr('download', 'marks.html')
+    //     .hide()
+    //     .appendTo('body')[0]
+    //     .click()
+    //
+    // $('#marking_download').remove()
+
+    let filename ="example.html"
+    debugger;
+    zip.file(filename,b.html());
+    zip.generateAsync({type:"blob"})
+        .then(function(content) {
+            saveAs(content, "example.zip");
+        });
+}
 
 function responseDownload() {
     //a new doc containing all responses and to be downloaded
@@ -93,6 +96,18 @@ function responseDownload() {
     aDownload.download = filename;
     aDownload.click();
 }
+
+Shiny.addCustomMessageHandler("response_download_onClick",
+    function(id) {
+        responseDownload();
+    }
+);
+
+Shiny.addCustomMessageHandler("marking_download_onClick",
+    function (message) {
+        markingDownload();
+    }
+);
 
 // For testing only
 /*

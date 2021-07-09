@@ -23,8 +23,6 @@ function displayPreviousResponse() {
 }
 
 function initStorage(htmlStrings) {
-    var zip = new JSZip();
-    debugger;
     currentResponseNum = 0;
     responseStorage =Array();
 
