@@ -52,7 +52,7 @@ function responseDownload() {
     let id = document.querySelector('#id');
     let idDiv = doc.createElement('div');
     idDiv.id = "id";
-    idDiv.textContent = (id!=null && id!=="") ? id.value : "ID IS NOT DEFINED";
+    idDiv.textContent = (id!=null && id.value!=="") ? id.value : "ID IS NOT DEFINED";
     doc.body.appendChild(idDiv);
 
     let dl = doc.createElement("dl");
@@ -85,7 +85,7 @@ function responseDownload() {
     //Assemble the blob that contains the HTML
     let blob = new Blob([doc.body.innerHTML]);
     let url = window.URL.createObjectURL(blob);
-    let filename = 'response.html';
+    let filename = 'response' + ((id!=null && id.value!=="") ? id.value : "ID IS NOT DEFINED") +'.html';
 
     // Trigger auto download
     let aDownload = document.createElement('a');
