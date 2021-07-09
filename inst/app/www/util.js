@@ -1,71 +1,5 @@
-// shinyjs.addMarkingComponent = function (params){
-//     alert("fds");
-//     let doc = new DOMParser().parseFromString(params.htmlString,"text/html")
-//     doc.querySelectorAll("div").forEach(function (node){
-//         let input = doc.createElement("input")
-//         input.id="mark_"+node.id
-//         node.appendChild(input);
-//     })
-// };
-
-// For testing only
-/*
-$(document).on('shiny:connected', function(event) {
-    alert('Connected to the server');
-});
-*/
 const STU_ANS_TAG_PREFIX = "student_ans_"
 const STU_ATP_TAG_PREFIX = "student_attempt_"
-
-/**
- * When the responseBox receives new student response file,
- * append a inputBox for mark into every <div> answer section, whose id is regulated to start with "stu_ans"
- */
-/*
-$(document).on('shiny:value', function (event) {
-    if (event.target.id === 'responseBox') {
-
-        // student response html to DOM
-        let doc = new DOMParser().parseFromString(event.value.html, "text/html");
-
-        //TODO not working properly // If the solutions is not shown (so the std_ans is not calculated), check the box
-        if (!document.getElementById('solutions').checked) {
-            document.getElementById('solutions').checked = true
-            Shiny.setInputValue("solutions", true, {priority: "event"})
-        }
-
-        // Match the id field with current student's, hence load the correct dataset for him.
-        if (document.getElementById("id").value !== doc.getElementById("id").innerText) {
-            Shiny.setInputValue("id", doc.getElementById("id").innerText);
-            document.getElementById("id").value = doc.getElementById("id").innerText;
-        }
-
-        // Append objective questions' correctness and mark awarding field to every student_ans div tag
-        doc.querySelectorAll("div.student_ans").forEach(function (node) {
-            debugger;
-            let questionNumber = node.id.substring(12, node.id.length); //TODO hardcode
-            let ans = parseFloat(node.querySelector("dd").innerText)
-            if (node.querySelector(".ql-editor") !=null) {
-                return;
-            }
-            let standardAnsId = "#" + "standard_ans_" + questionNumber
-            let standard_ans = parseFloat(document.querySelector(standardAnsId).textContent)
-            let isCorrect = Math.abs(standard_ans - ans) < 0.1 //TODO hardcode threshold
-
-            let isCorrectOutput = document.createElement("p")
-            let textNode = document.createTextNode(isCorrect ? "Correct" : "Incorrect");
-            isCorrectOutput.appendChild(textNode);
-            node.appendChild(isCorrectOutput)
-
-            let input = document.createElement("input")
-            input.id = "mark_" + node.id
-            node.appendChild(input);
-        })
-        // Update the html string to be rendered
-        event.value.html = doc.body.innerHTML;
-    }
-});
-*/
 
 Shiny.addCustomMessageHandler("marking_download_onClick",
     function (message) {
@@ -160,4 +94,10 @@ function responseDownload() {
     aDownload.click();
 }
 
+// For testing only
+/*
+$(document).on('shiny:connected', function(event) {
+    alert('Connected to the server');
+});
+*/
 
