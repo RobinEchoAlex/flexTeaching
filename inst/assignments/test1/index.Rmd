@@ -26,5 +26,7 @@ cat(
 "
 > Note that the values given by SPSS may be slightly different than the ones you calculated due to the rounding in the calculation. When you calculate it, it is best not to round until the end (unlike what is shown in questions 5 and 6, where values were rounded after each step for neatness of the display).
 ")
+
+
 ```
 

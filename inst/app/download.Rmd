@@ -9,6 +9,7 @@ runtime: shiny_prerendered
 ---
 
 ```{r child="children/setup.Rmd"}
+
 ```
 
 ```{r child="children/query_string.Rmd"}
@@ -50,4 +51,5 @@ seed <- reactive({
 ```
 
 ```{r child="children/content.Rmd"}
+
 ```

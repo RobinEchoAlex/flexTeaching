@@ -5,7 +5,7 @@ compile_assignment_html <- function(path, envir = new.env(), ...){
   # equal to 'output: html_fragment' in rmd header. see https://rmarkdown.rstudio.com/html_fragment_format.html
   output_format = rmarkdown::html_fragment(pandoc_args = c("--metadata", "title= " ) )
   rmarkdown::render(input = input, output_file = tmpfn, output_format = output_format,
-                    envir = envir, quiet = TRUE, ...)
+                    envir = envir, intermediates_dir = ".", knit_root_dir = "." , quiet = TRUE, ...)
   return(tmpfn)
 }
 

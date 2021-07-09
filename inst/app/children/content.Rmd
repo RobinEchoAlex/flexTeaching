@@ -61,79 +61,79 @@ init_list = reactive({
 
 ```{r context="render"}
 # Render a reactive element called "buttonBox"
-uiOutput("buttonBox", style = "width: 100%; margin: auto;")
+# uiOutput("buttonBox", style = "width: 100%; margin: auto;")
 ```
 
 ```{r context="server"}
 
-# Business logic of download buttons
-output$buttonBox <- renderUI({
-
-  req(input$assignment)
-
-  assignment = input$assignment
-  assignment_data = all_assignment_data[[assignment]]
-
-  fmt = flexTeaching::pkg_options()$date_format_prnt
-
-  req(assignment_data$restrict_before < Sys.time())
-
-  solutions = solutions()
-
-  e = new.env()
-  flexTeaching:::sourceAll(assignment_data, e)
-
-  # eventually get the list of buttons to be render and its onClick handler, defined in utility.R of each assignments
-  bn = assignment_data$buttons
-
-  if (is.null(bn)) return()
-
-  if (!exists(bn, envir = e)) return()
-  bs = get(bn, envir = e)
-  button_reactives = list()
-
-  # For every botton in the list...
-  bl = lapply(names(bs), function(b) {
-
-    # Pass the data need to create the file, and store the retuned filedata in button_reactives
-    button_reactives[[b]] = reactive({
-      shinybusy::show_modal_spinner(text = "Creating file...")
-      fc = bs[[b]]$f( #call the f, i.e. the handler function defined in the utility.R, namely data_file()
-        assignment_data, # para list of the funtion # TODO abstract?
-        input$id,
-        seed(),
-        solutions,
-        input$format,
-        init_list(),
-        entry)
-      shinybusy::remove_modal_spinner()
-      return(fc) #list(fileName as fn, fileData as d)
-    }) %>% bindCache(input$assignment, input$id, seed(), solutions(), input$format, b, assignment_accessible())
-
-    # Bind the file retrieved above to the output$button
-    output[[glue::glue("button_{b}")]] <- downloadHandler(
-      filename = function() {
-        button_reactives[[b]]()$fn
-      },
-      content = function(f) {
-        d = button_reactives[[b]]()$d
-        con = file(description = f, open = "wb")
-        writeBin(object = d, con = con)
-        close(con)
-      }
-    )
-
-    # Create the download button and define the displayed text and icon.
-    shiny::downloadButton(glue::glue("button_{b}"), label = bs[[b]]$label,
-                          icon = icon(bs[[b]]$icon))
-  })
-
-
-  do.call(tagList, bl)
-
-})
-
-shinyjs::onclick("button_data", function() { if (is.null(id) || input$id == "") shinyjs::info("Warning: The ID field is empty so 0 mark will be given if you submit answer for this dataset.") })
+# # Business logic of download buttons
+# output$buttonBox <- renderUI({
+#
+#   req(input$assignment)
+#
+#   assignment = input$assignment
+#   assignment_data = all_assignment_data[[assignment]]
+#
+#   fmt = flexTeaching::pkg_options()$date_format_prnt
+#
+#   req(assignment_data$restrict_before < Sys.time())
+#
+#   solutions = solutions()
+#
+#   e = new.env()
+#   flexTeaching:::sourceAll(assignment_data, e)
+#
+#   # eventually get the list of buttons to be render and its onClick handler, defined in utility.R of each assignments
+#   bn = assignment_data$buttons
+#
+#   if (is.null(bn)) return()
+#
+#   if (!exists(bn, envir = e)) return()
+#   bs = get(bn, envir = e)
+#   button_reactives = list()
+#
+#   # For every botton in the list...
+#   bl = lapply(names(bs), function(b) {
+#
+#     # Pass the data need to create the file, and store the retuned filedata in button_reactives
+#     button_reactives[[b]] = reactive({
+#       shinybusy::show_modal_spinner(text = "Creating file...")
+#       fc = bs[[b]]$f( #call the f, i.e. the handler function defined in the utility.R, namely data_file()
+#         assignment_data, # para list of the funtion # TODO abstract?
+#         input$id,
+#         seed(),
+#         solutions,
+#         input$format,
+#         init_list(),
+#         entry)
+#       shinybusy::remove_modal_spinner()
+#       return(fc) #list(fileName as fn, fileData as d)
+#     }) %>% bindCache(input$assignment, input$id, seed(), solutions(), input$format, b, assignment_accessible())
+#
+#     # Bind the file retrieved above to the output$button
+#     output[[glue::glue("button_{b}")]] <- downloadHandler(
+#       filename = function() {
+#         button_reactives[[b]]()$fn
+#       },
+#       content = function(f) {
+#         d = button_reactives[[b]]()$d
+#         con = file(description = f, open = "wb")
+#         writeBin(object = d, con = con)
+#         close(con)
+#       }
+#     )
+#
+#     # Create the download button and define the displayed text and icon.
+#     shiny::downloadButton(glue::glue("button_{b}"), label = bs[[b]]$label,
+#                           icon = icon(bs[[b]]$icon))
+#   })
+#
+#
+#   do.call(tagList, bl)
+#
+# })
+#
+# shinyjs::onclick("button_data", function() { if (is.null(id) || input$id == "") shinyjs::info("Warning: The ID field is empty so 0 mark will be given if you submit answer for this dataset.") })
 ```
 
 ### Assignment
@@ -177,31 +177,31 @@ output$assignmentBox <- renderUI({
 
 ```{r context="server"}
 #when render_out() is called, run the js script provided in the on-load field of yml file
-observeEvent(render_out(), {
-
-  req(input$assignment)
-  assignment = input$assignment
-  assignment_data = all_assignment_data[[assignment]]
-
-  req(!is.null(assignment_data[['on-load']]))
-
-  # replace all \ with \\\ in the 'on-load' content
-  js_content = gsub(pattern = "\"", replacement = "\\\"", x = assignment_data[['on-load']], fixed = TRUE)
-
-  # substitude the id placeholder in the js script with real id
-  e = new.env()
-  e$.flexteach_info = init_list()
-  # js_expr = "glue:glue(..)", which will be evaluated in the next step
-  js_expr = parse(text = glue::glue('glue::glue("{js_content}")'))
-  # try to parse the js content in 'on-load' field
-  js_parsed = tryCatch(eval(expr = js_expr, envir = e),
-                       error = function(c)
-                         safeError(glue::glue("Problem parsing javascript code on load of assignment {input$assignment}: {c}"))
-  )
-
-  # and run the js
-  if (!is.null(js_parsed) & length(js_parsed) > 0)
-    shinyjs::runjs(js_parsed)
-
-})
+# observeEvent(render_out(), {
+#
+#   req(input$assignment)
+#   assignment = input$assignment
+#   assignment_data = all_assignment_data[[assignment]]
+#
+#   req(!is.null(assignment_data[['on-load']]))
+#
+#   # replace all \ with \\\ in the 'on-load' content
+#   js_content = gsub(pattern = "\"", replacement = "\\\"", x = assignment_data[['on-load']], fixed = TRUE)
+#
+#   # substitude the id placeholder in the js script with real id
+#   e = new.env()
+#   e$.flexteach_info = init_list()
+#   # js_expr = "glue:glue(..)", which will be evaluated in the next step
+#   js_expr = parse(text = glue::glue('glue::glue("{js_content}")'))
+#   # try to parse the js content in 'on-load' field
+#   js_parsed = tryCatch(eval(expr = js_expr, envir = e),
+#                        error = function(c)
+#                          safeError(glue::glue("Problem parsing javascript code on load of assignment {input$assignment}: {c}"))
+#   )
+#
+#   # and run the js
+#   if (!is.null(js_parsed) & length(js_parsed) > 0)
+#     shinyjs::runjs(js_parsed)
+#
+# })
 ```
