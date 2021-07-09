@@ -3,23 +3,22 @@ const STU_ATP_TAG_PREFIX = "student_attempt_"
 
 
 function markingDownload(){
-    var zip = new JSZip();
+    let zip = new JSZip();
 
     saveCurrentResponse();
 
-
     for (let i=0;i< responseStorage.length ;i++){
-        let responses = responseStorage[i].cloneNode(true);
-        responses.querySelectorAll("input").forEach(function (node) {
-            let dd = responses.createElement("dd");
+        let markedDoc = responseStorage[i].cloneNode(true);
+        markedDoc.querySelectorAll("input").forEach(function (node) {
+            let dd = markedDoc.createElement("dd");
             dd.id =  node.id;
             dd.innerText = node.value;
             node.replaceWith(dd);
         })
 
         //todo throw error/handle students with same id
-        let filename ="example."+ responses.getElementById("id").innerText+".html"
-        zip.file(filename,responses.body.innerHTML);
+        let filename ="example."+ markedDoc.getElementById("id").innerText+".html"
+        zip.file(filename,markedDoc.body.innerHTML);
     }
 
     zip.generateAsync({type:"blob"})
