@@ -4,30 +4,6 @@ if(!exists(".flexteach_solutions"))
   .flexteach_solutions = FALSE
 ```
 
-
-```{r}
-loadScript = function (codeFileName = "reactCode.js"){
-  library(readr)
-  #wd = getwd()
-  # setwd(getSrcDirectory()[1])
-  # https://stackoverflow.com/questions/13672720/r-command-for-setting-working-directory-to-source-file-location-in-rstudio
-  # setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-  #wd = getwd()
-  fileName = paste0('include/js/',codeFileName);
-  jsScriptString <- read_file(fileName)
-  # replacing the id placeholder in the js code with real id at runtime
-  if (is.null(input$id) || input$id==""){
-    id = -1;
-  }else{
-    id = input$id;
-  }
-  idString = paste0("\"", id, "\"")
-  jsScriptString = sub('\\{id\\}',idString , jsScriptString)
-  return(jsScriptString)
-}
-
-```
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE
@@ -92,9 +68,7 @@ cat()
 
 tags$div(id="standard_ans_q4",class="standard_ans",r,style="visibility: hidden");
 ```
-```{r}
-add_input_field("q4","Q4")
-```
+
 
 5. Use the summary statistics and correlation you computed above to compute the slope of the regression line.
 
@@ -107,31 +81,6 @@ add_input_field("q4","Q4")
 ```{r eval = .flexteach_solutions, child='children/intercept.Rmd'}
 ```
 
-<!-- Create the editor container -->
-<div id="student_attempt_q6">
-
-</div>
-
-
-<!-- Initialize Quill editor -->
-<script>
-// Ref: https://quilljs.com/docs/formats/
-var toolbarOptions = [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      ['image', 'formula','code-block']
-];
-
-  var quill = new Quill('#student_attempt_q6', {
-  modules: {
-    toolbar: toolbarOptions
-  },
-    placeholder: 'Enter your answer to Question 6',
-    theme: 'snow'
-  });
-</script>
 
 7. Perform a linear regression analysis in SPSS.
 
@@ -161,11 +110,8 @@ data.frame(
   fmt_number(c("R","r2","ar2","s"), decimals = 3) %>%
   tab_header("Model summary")
 
-tags$div(id="standard_ans_q7",class="standard_ans",r2,style="visibility: hidden");
 ```
-```{r}
-add_input_field("q7","Q7")
-```
+
 
 ```{r eval = .flexteach_solutions}
 
@@ -212,4 +158,3 @@ cat(
 ")
 ```
 
-<button onclick=responseDownload()>download response</button>
