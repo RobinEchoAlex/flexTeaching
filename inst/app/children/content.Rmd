@@ -168,10 +168,11 @@ render_out <- reactive({
 ```
 
 ```{r context="server"}
-output$assignmentBox <- renderUI({
-  # adds MathJax to the page and typeset the math expressions
-  withMathJax(render_out())
-})
+  output$assignmentBox <- renderUI({
+    # adds MathJax to the page and typeset the math expressions
+    withMathJax(render_out())
+  });
+
 ```
 
 

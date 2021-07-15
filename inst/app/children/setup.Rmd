@@ -63,3 +63,13 @@ shinyOptions(
 
 <!-- To automatically render math in text elements, include the auto-render extension: -->
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+<!-- react-quill https://github.com/zenoamaro/react-quill-->
+<script src="https://unpkg.com/react@latest/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/prop-types/prop-types.js"></script>
+<script src="https://unpkg.com/react-quill@latest/dist/react-quill.js"></script>
+<!--see https://reactjs.org/docs/add-react-to-a-website.html-->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script type="text/babel" src="www/quill.js"></script>
+

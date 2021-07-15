@@ -108,30 +108,13 @@ add_input_field("q4","Q4")
 ```
 
 <!-- Create the editor container -->
-<div id="student_attempt_q6">
+<div id="student_attempt_q6" class="rtfInput">
 
 </div>
 
 
 <!-- Initialize Quill editor -->
-<script>
-// Ref: https://quilljs.com/docs/formats/
-var toolbarOptions = [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      ['image', 'formula','code-block']
-];
 
-  var quill = new Quill('#student_attempt_q6', {
-  modules: {
-    toolbar: toolbarOptions
-  },
-    placeholder: 'Enter your answer to Question 6',
-    theme: 'snow'
-  });
-</script>
 
 7. Perform a linear regression analysis in SPSS.
 
