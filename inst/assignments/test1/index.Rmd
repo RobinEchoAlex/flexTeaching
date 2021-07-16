@@ -82,7 +82,7 @@ sum_stats %>%
         fmt_number(c("Mean","SD"), decimals = 3)
 ```
 
-4. Compute the correlation between the two variables ``r cn[1]`` and ``r cn[2]``.
+4. Compute the correlation between the two variables ``r cn[1]`` and ``r cn[2]``. 你好
 
 ```{r results = 'asis', eval = .flexteach_solutions}
 r = cor(.flexteach_info$data)[2] %>%
@@ -108,12 +108,7 @@ add_input_field("q4","Q4")
 ```
 
 <!-- Create the editor container -->
-<div id="student_attempt_q6" class="rtfInput">
-
-</div>
-
-
-<!-- Initialize Quill editor -->
+<div id="student_attempt_q6" class="rtfInput"></div>
 
 
 7. Perform a linear regression analysis in SPSS.
@@ -187,6 +182,7 @@ lm_obj %>%
         tab_spanner("Standardized", "std_beta")
 
 ```
+<div id="student_attempt_q7_subj" class="rtfInput"></div>
 
 ```{r results = 'asis', eval = .flexteach_solutions}
 cat(

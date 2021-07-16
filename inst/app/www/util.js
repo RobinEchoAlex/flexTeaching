@@ -102,3 +102,7 @@ $(document).on('shiny:connected', function(event) {
 });
 */
 
+window.onload = function (){
+    $(window).off('resize');
+}
+
