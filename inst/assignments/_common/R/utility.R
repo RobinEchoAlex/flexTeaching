@@ -20,7 +20,6 @@ data_file = function(assignment_data, id, seed, solutions, format, init, entry){
   currentTimeString = format(Sys.time(), "%d%m%Y_%H%M%S")
 
   # if it's 'Check your assignment' page, then include seed in filename
-
   fn = ifelse(entry=="solve",
               glue::glue("{entry}_{assignment_data$shortname}_{id}_{seed}_{currentTimeString}_{hash}{ext}"),
               glue::glue("{entry}_{assignment_data$shortname}_{id}_{currentTimeString}_{hash}{ext}")

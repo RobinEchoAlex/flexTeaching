@@ -1,0 +1,74 @@
+---
+title: "flexTeaching"
+output:
+  flexdashboard::flex_dashboard:
+    theme: cerulean
+    includes:
+      in_header: !expr flexTeaching:::writeHeaders()
+runtime: shiny_prerendered
+---
+
+```{r child="children/setup.Rmd"}
+
+```
+
+```{r child="children/query_string.Rmd"}
+```
+```{r}
+MODE_DWN_STR = "Download data for submission";
+MODE_SOLVE_STR = "Exercise with sample answers";
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r context="render"}
+
+library(shinyWidgets)
+radioGroupButtons(
+        inputId = "mode",
+        label = "Mode:",
+        choices = c(MODE_DWN_STR,
+                    MODE_SOLVE_STR),
+        selected = MODE_DWN_STR,
+        direction = "vertical",
+        justified = TRUE
+)
+
+```
+
+```{r child="children/sidebar_main.Rmd"}
+```
+
+Column
+------------------------------------
+
+```{r context="server"}
+entry <- "download"
+
+solutions <- function(){
+  FALSE
+}
+
+l = readLines("secret")
+masterseed = l[length(l)]
+
+seed <- reactive({
+
+  req(!is.null(input$assignment))
+
+  if(masterseed == "") stop("Master seed cannot be blank!")
+
+  salt = all_assignment_data[[input$assignment]]$`seed-salt`
+  seed = flexTeaching:::animalSeed(masterseed, salt)
+
+  return(seed)
+
+})
+
+
+```
+
+```{r child="children/content.Rmd"}
+
+```
