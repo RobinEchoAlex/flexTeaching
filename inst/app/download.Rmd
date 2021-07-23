@@ -25,7 +25,9 @@ Column
 ------------------------------------
 
 ```{r context="server"}
-entry <- "download"
+entry <- function (){
+  return("download");
+}
 
 solutions <- function(){
   FALSE

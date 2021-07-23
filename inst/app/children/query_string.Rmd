@@ -1,6 +1,6 @@
 ```{r context='server'}
 # Update the query string to match the value of input field instantly
-observeEvent(c(input$assignment, input$id, input$format, solutions(), seed()), {
+observeEvent(c(input$assignment, input$id, input$format, solutions(), seed(),entry()), {
   
   req(
     !is.null(input$assignment) & 
@@ -10,8 +10,8 @@ observeEvent(c(input$assignment, input$id, input$format, solutions(), seed()), {
     )
   
   string = glue::glue("?assignment={input$assignment}&id={input$id}&format={input$format}")
-  
-  if(entry == 'solve')
+
+  if(entry() == 'solve')
     string = glue::glue("{string}&solutions={solutions()}&seed={seed()}")
   
   shiny::updateQueryString(queryString = string)

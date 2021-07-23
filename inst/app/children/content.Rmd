@@ -105,7 +105,7 @@ output$buttonBox <- renderUI({
         solutions,
         input$format,
         init_list(),
-        entry)
+        entry())
       shinybusy::remove_modal_spinner()
       return(fc) #list(fileName as fn, fileData as d)
     }) %>% bindCache(input$assignment, input$id, seed(), solutions(), input$format, b, assignment_accessible())

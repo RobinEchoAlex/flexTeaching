@@ -13,9 +13,16 @@ runtime: shiny_prerendered
 
 ```
 
+```{r, context="render"}
+# Load a lib that provides copy-to-clipboard functionality
+library(rclipboard)
+shiny::includeScript(path = system.file("lib/clipboard.min.js", package = "rclipboard"))
+
+```
+
 ```{r child="children/query_string.Rmd"}
 ```
-```{r}
+```{r context="setup"}
 MODE_DWN_STR = "Download data for submission";
 MODE_SOLVE_STR = "Exercise with sample answers";
 ```
@@ -38,36 +45,60 @@ radioGroupButtons(
 
 ```
 
-```{r child="children/sidebar_main.Rmd"}
-```
-
-Column
-------------------------------------
-
 ```{r context="server"}
-entry <- "download"
 
-solutions <- function(){
-  FALSE
-}
+entry = reactive({
+  if (input$mode==MODE_DWN_STR){
+    return("download")
+  }else if (input$mode==MODE_SOLVE_STR){
+    return("solve")
+  }
+})
 
 l = readLines("secret")
 masterseed = l[length(l)]
 
-seed <- reactive({
+seed = reactive({
+  if (input$mode==MODE_DWN_STR){
+    req(!is.null(input$assignment))
 
-  req(!is.null(input$assignment))
+    if(masterseed == "") stop("Master seed cannot be blank!")
 
-  if(masterseed == "") stop("Master seed cannot be blank!")
+    salt = all_assignment_data[[input$assignment]]$`seed-salt`
+    seed = flexTeaching:::animalSeed(masterseed, salt)
 
-  salt = all_assignment_data[[input$assignment]]$`seed-salt`
-  seed = flexTeaching:::animalSeed(masterseed, salt)
+    return(seed)
+  }else if (input$mode==MODE_SOLVE_STR){
+    return(input$seed)
+  }
+})
 
-  return(seed)
+solutions = reactive({
+  if (input$mode==MODE_DWN_STR){
+    return(FALSE)
+  }else if (input$mode==MODE_SOLVE_STR){
+    return(input$solutions)
+  }
+})
 
+observeEvent(input$mode,{
+  if (input$mode==MODE_DWN_STR){
+      session$sendCustomMessage("hide_admin","");
+  }else if(input$mode==MODE_SOLVE_STR){
+      session$sendCustomMessage("show_admin","");
+  }
 })
 
 ```
+
+```{r child="children/sidebar_main.Rmd"}
+```
+
+```{r child="children/sidebar_solve.Rmd"}
+```
+
+Column
+------------------------------------
 
 ```{r child="children/content.Rmd"}
 

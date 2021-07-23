@@ -36,7 +36,9 @@ Column
 
 ```{r context="server"}
 #"entry" is either solve or download
-entry <- "solve"
+entry <- function (){
+  return("solve");
+}
 
 seed <- reactive({
   input$seed
