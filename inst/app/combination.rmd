@@ -3,6 +3,7 @@ title: "flexTeaching"
 output:
   flexdashboard::flex_dashboard:
     theme: cerulean
+    resize_reload: FALSE
     includes:
       in_header: !expr flexTeaching:::writeHeaders()
 runtime: shiny_prerendered
