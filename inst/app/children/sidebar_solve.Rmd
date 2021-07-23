@@ -4,7 +4,8 @@ uiOutput("solutionsbox")
 
 htmltools::tags$div( # TODO clickable visual clue
   "Show admin",
-  id = "show_admin"
+  id = "show_admin",
+   style = "color: blue; "
 )
 
 htmltools::tags$div(
