@@ -73,10 +73,6 @@ Editor.propTypes = {
     container: PropTypes.string
 }
 
-$(document).on('shiny:value', function(event) {
-
-});
-
 
 function addQuill(){
     console.log("addQuill() is triggered");
@@ -96,4 +92,3 @@ const callback = function(mutationsList, observer) {
 };
 const observer = new MutationObserver(callback);
 observer.observe(targetNode, config);
-

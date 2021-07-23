@@ -128,7 +128,6 @@ output$buttonBox <- renderUI({
                           icon = icon(bs[[b]]$icon))
   })
 
-
   do.call(tagList, bl)
 
 })

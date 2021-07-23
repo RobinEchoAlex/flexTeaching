@@ -82,7 +82,7 @@ sum_stats %>%
         fmt_number(c("Mean","SD"), decimals = 3)
 ```
 
-4. Compute the correlation between the two variables ``r cn[1]`` and ``r cn[2]``. 你好
+4. Compute the correlation between the two variables ``r cn[1]`` and ``r cn[2]``.
 
 ```{r results = 'asis', eval = .flexteach_solutions}
 r = cor(.flexteach_info$data)[2] %>%

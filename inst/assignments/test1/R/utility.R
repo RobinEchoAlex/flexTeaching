@@ -12,12 +12,10 @@ get_data <- function(){
   )
 }
 
-
-
 init <- function(assignment_data, id, seed, solutions, e){
   ret_list = list(
     data = get_data(),
-    id = id
+    id = id #TODO why
     )  
   return(ret_list)
 }

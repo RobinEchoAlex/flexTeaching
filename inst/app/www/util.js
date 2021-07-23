@@ -2,27 +2,27 @@ const STU_ANS_TAG_PREFIX = "student_ans_"
 const STU_ATP_TAG_PREFIX = "student_attempt_"
 
 
-function markingDownload(){
+function markingDownload() {
     let zip = new JSZip();
 
     saveCurrentResponse();
 
-    for (let i=0;i< responseStorage.length ;i++){
+    for (let i = 0; i < responseStorage.length; i++) {
         let markedDoc = responseStorage[i].cloneNode(true);
         markedDoc.querySelectorAll("input").forEach(function (node) {
             let dd = markedDoc.createElement("dd");
-            dd.id =  node.id;
+            dd.id = node.id;
             dd.innerText = node.value;
             node.replaceWith(dd);
         })
 
         //todo throw error/handle students with same id
-        let filename =markedDoc.getElementById("id").innerText+".html"
-        zip.file(filename,markedDoc.body.innerHTML);
+        let filename = markedDoc.getElementById("id").innerText + ".html"
+        zip.file(filename, markedDoc.body.innerHTML);
     }
 
-    zip.generateAsync({type:"blob"})
-        .then(function(content) {
+    zip.generateAsync({type: "blob"})
+        .then(function (content) {
             saveAs(content, "example.zip");
         });
 }
@@ -32,16 +32,16 @@ function responseDownload() {
     let doc = document.implementation.createHTMLDocument("Assignment Response");
     let link = doc.createElement("link");
 
-    link.rel ="stylesheet";
+    link.rel = "stylesheet";
     link.href = "https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css";
     link.integrity = "sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc";
-    link.crossOrigin= "anonymous";
+    link.crossOrigin = "anonymous";
     doc.body.appendChild(link);
 
     let id = document.querySelector('#id');
     let idDiv = doc.createElement('div');
     idDiv.id = "id";
-    idDiv.textContent = (id!=null && id.value!=="") ? id.value : "ID IS NOT DEFINED";
+    idDiv.textContent = (id != null && id.value !== "") ? id.value : "ID IS NOT DEFINED";
     doc.body.appendChild(idDiv);
 
     let dl = doc.createElement("dl");
@@ -74,7 +74,7 @@ function responseDownload() {
     //Assemble the blob that contains the HTML
     let blob = new Blob([doc.body.innerHTML]);
     let url = window.URL.createObjectURL(blob);
-    let filename = 'response' + ((id!=null && id.value!=="") ? id.value : "ID IS NOT DEFINED") +'.html';
+    let filename = 'response' + ((id != null && id.value !== "") ? id.value : "ID IS NOT DEFINED") + '.html';
 
     // Trigger auto download
     let aDownload = document.createElement('a');
@@ -84,7 +84,7 @@ function responseDownload() {
 }
 
 Shiny.addCustomMessageHandler("response_download_onClick",
-    function(id) {
+    function (id) {
         responseDownload();
     }
 );
