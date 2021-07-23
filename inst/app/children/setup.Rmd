@@ -22,6 +22,9 @@ globals = new.env()
 HTML('<head>
                <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.js"></script>
                <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+               <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+               <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.1.0/intro.min.js" integrity="sha512-vpRYyG0wwpTzFdMa1fWEV6GLWfJiiKG1W7dCPuIuvm2kbZMUA8jnokV84rdUft8AF6ih83/ItbmP/fDzNjVxsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+               <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.1.0/introjs.min.css" integrity="sha512-631ugrjzlQYCOP9P8BOLEMFspr5ooQwY3rgt8SMUa+QqtVMbY/tniEUOcABHDGjK50VExB4CNc61g5oopGqCEw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
           <script type="text/javascript" src="www/util.js"></script>
               <script type="text/javascript" src="www/responseStroage.js"></script>
           </head>')

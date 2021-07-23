@@ -102,7 +102,60 @@ $(document).on('shiny:connected', function(event) {
 });
 */
 
-window.onload = function (){
-    $(window).off('resize');
+// window.onload = function () {
+//     $(window).off('resize');
+// }
+
+Shiny.addCustomMessageHandler("hide_admin",
+    function (message) {
+        console.log("hide_admin");
+        $("#solutions").prop("disabled", true)
+            .prop("checked",false);
+        $("#admin_panel").hide();
+        $("#show_admin").off("click");
+    }
+);
+
+Shiny.addCustomMessageHandler("show_admin",
+    function (message) {
+        console.log("show_admin");
+        $("#solutions").prop("disabled", false);
+        $("#show_admin").on("click", function() {
+            $("#admin_panel").toggle();
+        });
+    }
+);
+
+function showIntroduction() {
+    if (Cookies.get('user-id')!==undefined){
+        return;
+    }
+    Cookies.set('user-id','TODO',{expires: 365});
+
+    introJs().setOptions({
+        steps: [{
+            intro: "Hello! Welcome to flexTeaching! This 30s intro will show you how to use the website."
+        }, {
+            element: document.querySelector('#mode'),
+            intro: "You will get a personalized dataset based on your ID and a random seed. " +
+                "So if you plan to submit your answer formally this time, select the first mode." +
+                "If you just want to practise, the second mode give you freedom to generate random dataset and verify your answer."
+        },{
+            element: document.querySelector('#section-column'),
+            intro: "You can choose different assignments and enter your student ID here."
+        },{
+            element: document.querySelector('#button_data'),
+            intro: "Once you fill you ID, you can download the dataset in the format you like."
+        },{
+            element: document.querySelector('#assignmentBox'),
+            intro: "Here's the detail of this assignment."
+        }]
+    }).start();
+
 }
+
+$('#assignmentBox').ready(function () {
+    showIntroduction();
+});
+
 
