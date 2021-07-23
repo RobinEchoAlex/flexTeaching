@@ -1,7 +1,7 @@
 Package: flexTeaching
 Type: Package
 Title: What the package does (short line)
-Version: 0.1
+Version: 0.2
 Date: 2021-01-31
 Author: Richard D. Morey
 Maintainer: Richard D. Morey <richarddmorey@gmail.com>
@@ -29,5 +29,6 @@ Imports:
     shinybusy,
     purrr,
     dplyr,
-    settings
+    settings,
+    cachem
 RoxygenNote: 7.1.1

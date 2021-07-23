@@ -22,13 +22,19 @@ getAssignments = function(path = system.file("assignments", package = "flexTeach
       fp = file.path(d,"_assignment.yml")
       if(file.exists(fp)){
         y = yaml::read_yaml(fp)
+        if(is.null(y$category)){
+          y$category = " "
+        }
+        if(is.null(y$sortkey)){
+          y$sortkey = Inf
+        }
         if(!is.null(y$hide_before)){
-          strptime(y$hide_before, format = date_format)
+          y$hide_before = strptime(y$hide_before, format = date_format)
         }else{
           y$hide_before = -Inf
         }
         if(!is.null(y$restrict_before)){
-          strptime(y$restrict_before, format = date_format)
+          y$restrict_before = strptime(y$restrict_before, format = date_format)
         }else{
           y$restrict_before = -Inf
         }
@@ -41,7 +47,12 @@ getAssignments = function(path = system.file("assignments", package = "flexTeach
     Filter(length, .) -> dirs #Filter out the null object returned by the above phrase
 
   # the name of each config object is set to the 'shortname' of this assignment
-  names(dirs) = purrr::map_chr(dirs, ~`$`(., 'shortname'))
+  shortnames = purrr::map_chr(dirs, ~`$`(., 'shortname'))
+  # Check for duplicate shortnames
+  if(any(duplicated(shortnames)))
+    stop("All assignment shortnames must be unique.")
+  
+  names(dirs) = shortnames
   if(!simple) return(dirs)
 
   # If caller specify simple = 1, only retain the below 5 infos in the config object

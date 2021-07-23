@@ -26,13 +26,22 @@ output$idbox <- renderUI({
 output$assignmentbox <- renderUI({
   query = getQueryString()
   assignment = query[['assignment']]
+  cat_regex   = query[['category']]
+  if(is.null(cat_regex))
+    cat_regex = ""
   flexTeaching:::getAssignments() %>%
-    { # drop assignment that need to be hidden, e.g. publish date not arrived yet
+    mutate(
+      hidden = case_when(
+        !grepl(pattern = cat_regex, x = category) ~ TRUE,
+        TRUE ~ hidden
+      ) # Hide ones that don't match category regexp
+    ) %>%
+    {
       if(is.null(assignment)){
         filter(., !hidden)
       }else{ # But if the querysting has specify the hidden assignment, then it can be shown
         filter(., !hidden | (shortname == !!assignment))
-      }
+      } # Filter out the hidden ones, except if we've specified it in the query string
     } %>%
     split(.$category) %>% # split by category
     purrr::map(function(el){ # extract the shortname as the displayed label

@@ -41,7 +41,7 @@ shinyjs::useShinyjs(html = TRUE)
 ```
 <script src="shinyjs/inject.js"></script>
 
-```{r cache, eval = FALSE, context="server"}
+```{r cache, eval = params$cache_setup, context="server"}
 shinyOptions(
   # Key-value cache stores with automatic pruning by age or max_size.
   cache = cachem::cache_disk(
