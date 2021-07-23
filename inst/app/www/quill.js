@@ -85,10 +85,20 @@ function addQuill(){
     });
 }
 
+function addWarningOnPageClose(){
+
+    $(".boxInput, .rtfInput").one('input',function (event) {
+        window.onbeforeunload = function(e) {
+            return 'Your change will not be saved!'; //Note that this custom message will not display on modern browser
+        };
+    })
+}
+
 const targetNode = document.getElementById('assignmentBox');
 const config = { attributes: true, childList: true, subtree: true };
 const callback = function(mutationsList, observer) {
     addQuill();
+    addWarningOnPageClose();
 };
 const observer = new MutationObserver(callback);
 observer.observe(targetNode, config);

@@ -39,7 +39,7 @@ add_input_field = function(question_id,text_hint){ # TODO Integrate ID and hint?
   return(
     tagList(
       tags$label(text_hint),
-      tags$input(id=tag_id),
+      tags$input(id=tag_id, class="boxInput"),
       tags$br()
     )
   )
