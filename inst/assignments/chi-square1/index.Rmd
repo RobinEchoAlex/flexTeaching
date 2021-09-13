@@ -1,0 +1,66 @@
+```{r solutions, echo=FALSE}
+# This is optional to prevent annoying errors when deploying shiny apps
+if(!exists(".flexteach_solutions"))
+        .flexteach_solutions = FALSE
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+        echo = FALSE
+        , dev = "svg"
+        , dpi = 150
+        , fig.width = 5
+        , fig.height = 5
+        , dev.args = list(pointsize=13)
+        , out.width = "40%"
+)
+library(broom)
+library(gt)
+library(dplyr)
+library(tidyr)
+```
+
+## Exercises
+
+1. Download the data above and import it into SPSS.
+
+```{r}
+cn = names(.flexteach_info$data)
+df = .flexteach_info$data
+dice1 = df[["dice1"]]
+```
+
+2. What is the degree of freedom of this dataset?
+```{r eval = .flexteach_solutions}
+cat(5)
+tags$div(id="standard_ans_q2",class="standard_ans",5,style="visibility: hidden");
+```
+```{r}
+add_input_field("q2","Degree of Freedom:")
+```
+
+3. What is the x2 value of number "5" for dice 1?
+```{r eval = .flexteach_solutions}
+tables = table(dice1)
+act_freq = tables[[5]][1]
+x2 = (act_freq-100/6)^2/(100/6);
+cat(x2)
+tags$div(id="standard_ans_q3",class="standard_ans",x2,style="visibility: hidden");
+```
+```{r}
+add_input_field("q3","x2 value:")
+```
+
+4. Calculate the X-Square value and p-value of dice 1.
+
+```{r eval = .flexteach_solutions}
+chi = chisq.test(tables)
+print(chi)
+tags$div(id="standard_ans_q4_1",class="standard_ans",chi$statistic[['X-squared']],style="visibility: hidden");
+tags$div(id="standard_ans_q4_2",class="standard_ans",chi$p.value,style="visibility: hidden");
+```
+```{r}
+add_input_field("q4_1","X-Square value:")
+add_input_field("q4_2","p-value:")
+```
